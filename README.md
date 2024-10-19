@@ -4,9 +4,10 @@ Este proyecto tiene la finalidad implementar en un programa el algoritmo de Thom
 - Thompson (Expresión regular -> AFN) 18 de Octubre
 - Construcción de conjuntos (AFN -> AFD) 25 de Octubre
 
-##CORRECIONES
-- La tabla no muestra correctamente los estados epsilon
-- Verficar que la tabla gene re correcto diagrama de estados
+## Ejecutar
+```bash
+python3 main.pyw
+```
 
 --- 
 ## Notas
