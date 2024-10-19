@@ -1,0 +1,2 @@
+letrasdigitosifor
+((((i.f)|((f.o).r))|(letras.((letras|digitos)*))))
