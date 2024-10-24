@@ -1,5 +1,6 @@
 from tkinter import ttk
 from Procesamiento import *
+from afn import*
 from tkinter import *
 from tkinter import messagebox
 from tkinter import filedialog
@@ -40,10 +41,10 @@ raiz.config(menu=menuop)
 font1=("Times New Roman",10)
 
 opc = Menu(menuop, tearoff=0)#tearoff=0 hace que desaparesca la lagrima es decir una linea que aparece
-opc.add_command(label="calcular", command=lambda:Conjuntos(),font=font1)
+opc.add_command(label="calcular_tablaTrancisiones", command=lambda:Conjuntos(),font=font1)
 
 opc2 = Menu(menuop, tearoff=0)
-opc2.add_command(label="Calcular", command=bucle, font=font1)
+opc2.add_command(label="calcular_Nuevo", command=lambda:Conjuntos_afn(), font=font1)
 
 opc3 = Menu(menuop, tearoff=0,font=font1)
 opc3.add_command(label="Abrir", command=abrir)

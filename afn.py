@@ -3,8 +3,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from Estructura_Automata import *
 
-#Genera la ventana emergente para el algoritmo de Thompson
-def Conjuntos():
+def Conjuntos_afn():
     font1=("Times New Roman",12)
     arrLabels=[]
     lexWindow=Toplevel()
@@ -13,20 +12,17 @@ def Conjuntos():
         lexWindow.attributes("-zoomed", True)
     except:
         lexWindow.geometry(f"{lexWindow.winfo_screenwidth()}x{lexWindow.winfo_screenheight()}+0+0")
-        
-    lexWindow.title("Algoritmo de Thompson")
+    
+    lexWindow.title("Automata finito determinista")
     lexWindow.config(bg="#B5FFFF")
     #82EEFD
 
-#Crea el listado de opciones 
     archivoL=Label(lexWindow,text="Ingresa una expresion",width=20,bg="#FFB3C6",font=font1)
     archivoL.place(x=20,y=50)
 
-#boton para seleccionar el archivo 
     archivoButton=Button(lexWindow,text="Inspeccionar",width=26,command=lambda:abrirArchivo(alphaEntry,erEntry,lexWindow),bg="#FFB3C6" ,font=font1)
     archivoButton.place(x=210,y=47)
 
-#muestra la expresion regular contenida en el archivo seleccionado 
     eregularL=Label(lexWindow,text="Expresión regular:",font=font1,width=20, bg="#FFB3C6")
     eregularL.place(x=20,y=100)
 
@@ -35,15 +31,13 @@ def Conjuntos():
 
     alphaLabel=Label(lexWindow,text="Alfabeto",font=font1,width=20, bg="#FFB3C6")
     alphaLabel.place(x=20,y=150)
-#muestra el alfabeto contenido en el archivo seleccionado
+
     alphaEntry=Entry(lexWindow,font=font1,width=30, bg="#FFB3C6")
     alphaEntry.place(x=210,y=151)
 
-#Define el espacio de la tabla 
     canvas=Canvas(lexWindow,width=1500,height=450, bg="#FFB3C6")
     canvas.place(x=0,y=200)
 
-#Habilita el scroll 
     def on_arrow_key(event):
             if event.keysym == "Left":
                 canvas.xview_scroll(-1, "units")
@@ -66,7 +60,6 @@ def Conjuntos():
     #horizontal_scrollbar.set(0.0,1.0)
     #horizontal_scrollbar.place(x=0,y=0,width=300)
 
-#crea el espacio para la tabla 
     tabla=Frame(canvas,width=1470,height=300)
     canvas.create_window((100, 50), window=tabla, anchor=NW)
     #canvas.configure(yscrollcommand=scrollbar.set,xscrollcommand=horizontal_scrollbar.set)
@@ -74,7 +67,7 @@ def Conjuntos():
     def on_mousewheel(event):
          canvas.yview_scroll(-1 * (event.delta // 120), "units")
     
-    afnButton=Button(lexWindow,text="Obtener AFND",width=15,font=font1,bg="#82EEFD",command=lambda:printTable(alphaEntry.get(),tabla,canvas,lexWindow,arrLabels,erEntry.get()) )
+    afnButton=Button(lexWindow,text="Obtener AFD",width=15,font=font1,bg="#82EEFD",command=lambda:printTableConjuntos(alphaEntry.get(),tabla,canvas,lexWindow,arrLabels,erEntry.get()) )
     afnButton.place(x=458,y=97)
     cleanButton=Button(lexWindow,text="Limpiar",font=font1,bg="#82EEFD",command=lambda:cleanTable(tabla,arrLabels,alphaEntry,erEntry))
     cleanButton.place(x=605,y=97)
@@ -86,13 +79,12 @@ def Conjuntos():
     canvas.bind_all("<KeyPress-Up>", on_arrow_key_v)
     canvas.bind_all("<KeyPress-Down>", on_arrow_key_v)
 
-#funcion que genera la escritura de la tabla 
-def  printTable(alfabeto,tabla,canvas,lexWindow,arrLabels,er):
+def  printTableLexico(alfabeto,tabla,canvas,lexWindow,arrLabels,er):
     expresion_reg = er
-    exp_postfija = expresion_postfija(expresion_reg)
-    print(f"la expresion regular convertida a postfija es: {exp_postfija}")
-    Automata=evaluar_expresion_postfija(exp_postfija)
-    font1=("Display",11)
+    expresion_reg = expresion_postfija(expresion_reg)
+    print(expresion_reg)
+    Automata=evaluar_expresion_postfija(expresion_reg)
+    font1=("Times New Roman",11)
     estados=alfabeto
     columna=1
     encabezadoL=Label(tabla,text="Estado",font=font1,borderwidth=1, relief="solid",width=20)
@@ -136,6 +128,7 @@ def  printTable(alfabeto,tabla,canvas,lexWindow,arrLabels,er):
                 celda=Label(tabla,text=str(num_estado)+ " f",width=20,borderwidth=1, relief="solid",font=font1)
             if not nodo.state.getFinalState() and num_estado != 0:
                 celda=Label(tabla,text=str(num_estado),width=20,borderwidth=1, relief="solid",font=font1)
+            
             celda.grid(row=i,column=l)
             l+=1
             edos=nodo.state.getTransitions()
@@ -169,7 +162,134 @@ def  printTable(alfabeto,tabla,canvas,lexWindow,arrLabels,er):
         messagebox.showerror("Error","introduce un alfabeto")
         lexWindow.grab_release()
 
-#localiza el ultimo nodo del automata
+def printTableConjuntos(alfabeto,tabla,canvas,lexWindow,arrLabels,er):
+    columna=1
+    abecedario=[]
+    font1=("Times New Roman",15)
+    numEstados=len(alfabeto)#Numero de estados
+    if numEstados:#Verificar que exista un alfabeto
+        """Obtener el AFN"""
+        expresion_reg = expresion_postfija(er)#Obtener la expresión postfija
+        Automata=evaluar_expresion_postfija(expresion_reg)#Obtener el autómata
+        
+        """Obtener el AFD"""
+        cerradura=[]
+        cerradura.append(0)
+        cerradura=cerradura_e(cerradura,Automata.head,"λ")
+        cerradura.append(0)
+        #print(cerradura)
+        NuevosEstados=AFD(cerradura,alfabeto,Automata.head)
+        print(NuevosEstados)
+
+        """Imprime los labels fantasma, el alfabeto y la palabra Estado"""
+        label_fantasma=Label(tabla,text="     ",width=10).grid(row=0,column=0)#Imprime una columna vacía
+        fila=1 #Fila de la tabla
+        columna=1#Columna de la tabla
+
+        """Verifica si el alfabeto contiene la palabra reservada digito o letra"""
+        bandera_letra = False
+        if 'l' in alfabeto and 'd' in alfabeto:#Si el alfabeto contiene las palabras reservadas
+            alfabeto_aux = alfabeto.replace('l',"")
+            alfabeto_aux = alfabeto.replace('d',"")
+            if len(alfabeto_aux) > 0:#Si el alfabeto no esta vacío despues de quitarle las palabras reservadas letra y digito
+                bandera_letra = True
+        elif 'l' in alfabeto:#Si el alfabeto contiene la palabra reservada letra
+            alfabeto_aux = alfabeto.replace('l',"")
+            if len(alfabeto_aux) > 0:#Si el alfabeto no esta vacío despues de quitarle las palabra reservada letra
+                bandera_letra = True
+        """
+        elif 'd' in alfabeto:#Si el alfabeto contiene la palabra reservada digito
+            alfabeto_aux = alfabeto.replace('d',"")
+            if len(alfabeto_aux) > 0:#Si el alfabeto no esta vacío despues de quitarle la palabra reservada digito
+                bandera_letra = True
+        """
+                
+        """Imprime el alfabeto"""
+        idSimbolos = 1
+        dictSimbolos = {}
+        for letra in alfabeto:
+            label_fantasma=Label(tabla,text="     ",width=10).grid(row=0,column=columna)#Imprime una columna vacía
+            
+            """Remplaza l por letra y d por digito"""
+            letra_aux = letra
+            if letra == 'l':
+                letra_aux="letra"
+            elif letra == 'd':
+                letra_aux="digito"
+            ColumnaL=Label(tabla,text=letra_aux,width=15,borderwidth=1, relief="solid",font=font1)
+            ColumnaL.grid(row=fila,column=columna)#Imprime el label
+            arrLabels.append(ColumnaL)#Agrega el label a un arreglo para poder modificarlo
+            abecedario.append(letra)#Agrega la letra al abecedario
+            dictSimbolos[idSimbolos]=letra#Agrega el simbolo al diccionario
+
+            """Agrega los simbolos 'letra-caracter'"""
+            if letra != 'l' and letra != 'd' and bandera_letra == True:
+                columna += 1
+                idSimbolos += 1#Aumenta el id de los simbolos
+                letra_aux2 = "letra-"+letra_aux
+                ColumnaL=Label(tabla,text=letra_aux2,width=15,borderwidth=1, relief="solid",font=font1)
+                ColumnaL.grid(row=fila,column=columna)#Imprime el label
+                arrLabels.append(ColumnaL)#Agrega el label a un arreglo para poder modificarlo
+                abecedario.append(letra)#Agrega la letra al abecedario
+                dictSimbolos[idSimbolos]=letra_aux2
+
+            columna+=1#Aumenta la columna
+            idSimbolos += 1
+        encabezadoL=Label(tabla,text="Estado",font=font1,borderwidth=1, relief="solid",width=10)#Imprime Estado en la primera columna y la primera fila
+        encabezadoL.grid(row=fila,column=0)
+        arrLabels.append(encabezadoL)#Agrega el label a un arreglo para poder modificarlo
+        abecedario.append("λ")#Agrega el lambda al abecedario
+        
+        """"Imprime los estados y las transiciones"""
+        EstadoFinal = encontrarEstadoFinal(Automata.head)#Obtiene el estado final
+        #print(EstadoFinal)
+        fila=2
+        tamañoLista=len(NuevosEstados)
+        nodo=NuevosEstados
+        #print(dictSimbolos)
+        for i in range(tamañoLista):#i es el indice de la lista
+            columna=0
+
+            """Verifica si el estado es inicial o final"""
+            estados_no_renombrados = nodo[i][1]#Obtiene la lista de estados no renombrado
+            #print(estados_no_renombrados)
+            for auxxx in estados_no_renombrados:#Recorre la lista de estados no renombrados
+                #print(auxxx)
+                if auxxx == 0:
+                    celda=Label(tabla,text=nodo[i][0]+" i",width=10,borderwidth=1, relief="solid",font=font1)#Imprime el estado
+                    break
+                elif auxxx == EstadoFinal:
+                    celda=Label(tabla,text=nodo[i][0]+" f",width=10,borderwidth=1, relief="solid",font=font1)#Imprime el estado
+                else:
+                    celda=Label(tabla,text=nodo[i][0],width=10,borderwidth=1, relief="solid",font=font1)#Imprime el estado
+
+            #celda=Label(tabla,text=nodo[i][0]+"",width=10,borderwidth=1, relief="solid",font=font1)#Imprime el estado
+            celda.grid(row=fila,column=columna)
+            columna=1
+            
+            """Imprime las transiciones"""
+            for j in range(len(dictSimbolos)):
+                simbolo = dictSimbolos[columna]#Obtiene el simbolo de la columna
+                transicionesDentro = nodo[i][2]#Obtiene la lista de transiciones
+                for transicion in transicionesDentro:#Recorre la lista de transiciones
+                    if transicion[1] == simbolo:#Si el simbolo de la transicion es igual al simbolo de la columna
+                        celda_sym=Label(tabla,text=transicion[2],width=15,borderwidth=1, relief="solid",font=font1)#Imprime el estado de transición
+                        celda_sym.grid(row=fila,column=columna)
+                        break#Termina el ciclo
+                    else:
+                        celda_sym=Label(tabla,text="-",width=15,borderwidth=1, relief="solid",font=font1)#Imprime el estado de transición
+                        celda_sym.grid(row=fila,column=columna)
+                columna+=1
+            fila+=1
+
+        """Actualiza la tabla"""
+        tabla.update_idletasks()#Actualizar la tabla
+        canvas.config(scrollregion=canvas.bbox("all"))#Actualizar el canvas
+    else:#Si no existe un alfabeto, muestra un error
+        lexWindow.grab_set()
+        messagebox.showerror("Error","introduce un alfabeto")
+        lexWindow.grab_release()
+
 def encontrarEstadoFinal(estados):
     nodo=estados
     while nodo:
@@ -307,7 +427,6 @@ def AFD(listaInicial,abecedario,head):
         final.append(auxestado_con_transiciones)
     return final #Devuelve una lista de tuplas
 
-# Función que elimina duplicados de una lista
 def quitaDuplicados(conjunto):
     nuevaLista=[]
     for i in conjunto:
@@ -315,7 +434,6 @@ def quitaDuplicados(conjunto):
             nuevaLista.append(i)
     return nuevaLista
 
-# Funciones auxiliares para manejo de estados
 def quitaDuplicados1(conjunto):
     nuevaLista=[]
     aux1=conjunto[0]
@@ -359,7 +477,6 @@ def getletra(estado,listaTuplas):
             return j[0]
     return '-'
 
-# Funciones auxiliares para manejo de estados
 def Mueve(elems,head,letra):#Esta funcion realiza el Mueve
     pila=[]
     conjunto=[]
@@ -396,7 +513,7 @@ def abrirArchivo(alphaEntry,erEntry,lexWindow):
     lexWindow.grab_set()
     alphaEntry.delete(0,END)
     erEntry.delete(0,END)
-    direccionArchivo=filedialog.askopenfilename(initialdir=r"Proyecto_compilador\Pruebas_expresiones_reg",title="Abrir",filetypes=(("texto","*.txt"),))
+    direccionArchivo=filedialog.askopenfilename(initialdir=r"D:\Sistemas\Proyect_Comp_Java\Proyecto_compilador\Pruebas_expresiones_reg",title="Abrir",filetypes=(("texto","*.txt"),))
     archivo=open(direccionArchivo)
     alfabeto=archivo.readline()
     expresionRegular =archivo.readline()
