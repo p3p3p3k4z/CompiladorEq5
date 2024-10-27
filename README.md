@@ -53,7 +53,12 @@ git commit -m "archivos corregidos"
 
 **4.Añadir el repositorio**
 ```bash
-git remote add origin https://github.com/p3p3p3k4z/Compilador.git
+git remote add origin https://github.com/p3p3p3k4z/CompiladorEq5.git
+```
+si se equivoca con el repositorio
+git remote set-url origin https://github.com/p3p3p3k4z/CompiladorEq5.git
+```bash
+git remote set-url origin https://github.com/p3p3p3k4z/CompiladorEq5.git
 ```
 
 **5.Subir tus cambios**
