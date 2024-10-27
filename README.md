@@ -8,6 +8,11 @@ Este proyecto tiene la finalidad implementar en un programa el algoritmo de Thom
 python3 main.pyw
 ```
 
+## Actualizaciones
+- Corrección de Interfaz para LINUX. Comentar la linea de codigo donde se meciona esta configuracion para usuarios windows
+- Chechar una posible mejora para la dimension de ventanas, equipo de interfaz
+- Implementacion requerida
+
 --- 
 ## Notas
 En el uso de la libreria tkinter
@@ -39,9 +44,6 @@ canvas.create_image(0, 0, image=background_image, anchor="nw")
 
 ---
 
-## Actualizaciones
-- Corrección de Interfaz para LINUX. Comentar la linea de codigo donde se meciona esta configuracion para usuarios windows
-- Chechar una posible mejora para la dimension de ventanas, equipo de interfaz
 
 **Asignacion y Reporte de Tareas**
 <https://drive.google.com/drive/folders/139GimlpaTpR47Wv7oUby-iAOCpY8NWAb?usp=drive_link>
