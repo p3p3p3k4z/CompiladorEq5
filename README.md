@@ -80,6 +80,17 @@ Cuando alguien actualiza su codigo es necesario recibir el codigo mas actualizad
 ```bash
 git pull origin main
 ```
+### Regresar a una version anterior
+```bash
+git clone <url-del-repositorio>
+git checkout version_1
+git log --oneline
+git reset --hard <commit-id>
+git push --force origin version_1
+```
+### General llave
+Esto es en caso de no admitir la contraseña
+<https://github.com/settings/tokens>
 
 ---
 
