@@ -88,6 +88,12 @@ git log --oneline
 git reset --hard <commit-id>
 git push --force origin version_1
 ```
+### Crear una nueva rama
+```bash
+git checkout -b <nombre-de-la-nueva-rama>
+git push origin <rama_creada>
+```
+
 ### General llave
 Esto es en caso de no admitir la contraseña
 <https://github.com/settings/tokens>
