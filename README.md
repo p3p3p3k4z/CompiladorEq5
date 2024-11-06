@@ -3,6 +3,7 @@ Este proyecto tiene la finalidad implementar un Compilador
 
 - Thompson (Expresión regular -> AFN) 18 de Octubre
 - Construcción de conjuntos (AFN -> AFD) 25 de Octubre
+- Analisis Sintactico 11 de Noviembre
 
 ## Ejecutar
 ```bash
@@ -21,7 +22,7 @@ Github es una herramienta que nos permite la documentación y control de version
 #### Obtén el repositorio
 Esto nos ayuda a obtener todo el repositorio en nuestra PC personal y poder tener acceso al código
 ```bash
-git clone https://github.com/p3p3p3k4z/Compilador.git
+git clone https://github.com/p3p3p3k4z/CompiladorEq5.git
 ```
 #### Crea tu Primer Commit
 Esto te ayudara a poder subir tus cambios o tu código a github. Recuerda hacer esto en la carpeta donde esta tu espacio de trabajo
