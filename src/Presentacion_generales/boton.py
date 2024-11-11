@@ -5,6 +5,13 @@ class Boton:
         # Crear el botón y almacenar su estado inicial como deshabilitado
         self.boton = Button(master, text=text, command=command)
         self.estado = 0  # 0 para deshabilitado, 1 para habilitado
+        
+        # Establecer color de fondo original (puedes cambiarlo según desees)
+        self.bg_color_original = self.boton.cget("bg")
+
+        # Asociar los eventos para el sombreado
+        self.boton.bind("<Enter>", self.sombrear)  # Al pasar el mouse por encima
+        self.boton.bind("<Leave>", self.restaurar_color)  # Al salir el mouse del botón
 
     def __str__(self):
         # Mostrar el estado del botón en la consola como 1 o 0
@@ -53,3 +60,18 @@ class Boton:
         if cursiva:
             fuente = (fuente[0], fuente[1], "italic")
         self.boton.config(font=fuente)
+        
+    def aumentar_tamano(self, aumento_x, aumento_y):
+        # Aumentar el tamaño del botón
+        ancho_actual = self.boton.winfo_width()
+        alto_actual = self.boton.winfo_height()
+        self.boton.config(width=ancho_actual + aumento_x, height=alto_actual + aumento_y)
+
+    def sombrear(self, event):
+        # Cambiar el color de fondo cuando el mouse pasa por encima
+        self.boton.config(bg="lightgray")  # Puedes cambiar este color a tu gusto
+
+    def restaurar_color(self, event):
+        # Restaurar el color original cuando el mouse sale del botón
+        self.boton.config(bg=self.bg_color_original)  # Restaurar el color original
+
