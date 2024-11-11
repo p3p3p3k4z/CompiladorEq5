@@ -1,5 +1,3 @@
-# VentanaImagen.py
-
 import tkinter as tk
 from PIL import Image, ImageTk  # sudo apt-get install python3-pil.imagetk
 from ventana import Ventana 
