@@ -17,7 +17,7 @@ def abrir():
 
 def VentanaPrincipal():
     # Crear instancia de MenuVentana
-    ventana_con_menu = MenuVentana(ancho=850, alto=650, titulo="Pecera con Menú", color_fondo="cyan")
+    ventana_con_menu = MenuVentana(ancho=850, alto=650, titulo="equipo5", color_fondo="cyan")
     ventana_con_menu.cargar_imagen("../../imagenes/portada.png")
 
     # Agregar submenús y opciones
