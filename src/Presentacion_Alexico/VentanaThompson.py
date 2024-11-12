@@ -5,15 +5,16 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
 
-# Agregar la ruta a la carpeta src
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'AnalizadorLexico_thompson')))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'AnalizadorLexico_alexico')))
+lib_path2 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'AnalizadorLexico_alexico'))
+sys.path.append(lib_path2)
+lib_path3 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'AnalizadorLexico_thompson'))
+sys.path.append(lib_path3)
+lib_path4 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'AnalizadorLexico_conjuntos'))
+sys.path.append(lib_path4)
 
-
-from AnalizadorLexico_thompson.thompson_alg import *
-from AnalizadorLexico_alexico.alfabeto import *
-from AnalizadorLexico_alexico.expresion import *
-
+from thompson_aux import *
+from conjuntos_aux import *
+from alexico_aux import *
 
 def Conjuntos():
     font1=("Times New Roman",12)
@@ -100,7 +101,7 @@ def Conjuntos():
 #funcion que genera la escritura de la tabla 
 def  printTable(alfabeto,tabla,canvas,lexWindow,arrLabels,er):
     expresion_reg = er
-    exp_postfija = ExpresionRegularAutomata.expresion_postfija(expresion_reg)
+    exp_postfija = expresion_postfija(expresion_reg)
     print(f"la expresion regular convertida a postfija es: {exp_postfija}")
     Automata=evaluar_expresion_postfija(exp_postfija)
     font1=("Display",11)
@@ -193,7 +194,7 @@ def abrirArchivo(alphaEntry,erEntry,lexWindow):
     lexWindow.grab_set()
     alphaEntry.delete(0,END)
     erEntry.delete(0,END)
-    direccionArchivo=filedialog.askopenfilename(initialdir=r"Pruebas_expresiones_reg/",title="Abrir",filetypes=(("texto","*.txt"),))
+    direccionArchivo=filedialog.askopenfilename(initialdir=r"../../Pruebas_expresiones_reg/",title="Abrir",filetypes=(("texto","*.txt"),))
     archivo=open(direccionArchivo)
     alfabeto=archivo.readline()
     expresionRegular =archivo.readline()

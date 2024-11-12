@@ -1,0 +1,14 @@
+#include <stdio.h>
+@
+#define PI 3.1416
+int main() {
+    // Esto es un comentario
+    int x = @10;
+    float y = 5.5;
+    if (x > y) {
+        @
+        #
+        printf("x es mayor que y"):
+    }
+    return 0;
+}
