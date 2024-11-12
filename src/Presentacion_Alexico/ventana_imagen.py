@@ -28,16 +28,29 @@ class VentanaImagen(Ventana):
             print(f"Error al cargar la imagen: {e}")
 
     def escalar_imagen(self, ancho_nuevo, alto_nuevo):
-        """Escalar la imagen manteniendo las proporciones."""
         if self.imagen_original:
             try:
+                # Mantener las proporciones de la imagen
                 ratio = min(ancho_nuevo / self.imagen_original.width, alto_nuevo / self.imagen_original.height)
                 ancho_redimensionado = int(self.imagen_original.width * ratio)
                 alto_redimensionado = int(self.imagen_original.height * ratio)
-                self.imagen_escalada = self.imagen_original.resize((ancho_redimensionado, alto_redimensionado), Image.LANCZOS)
-                print(f"Imagen escalada a {ancho_redimensionado}x{alto_redimensionado}.")
+
+                # Intentamos usar Image.LANCZOS (para versiones recientes de Pillow)
+                try:
+                    self.imagen_escalada = self.imagen_original.resize(
+                        (ancho_redimensionado, alto_redimensionado), Image.LANCZOS
+                    )
+                    print(f"Imagen escalada a {ancho_redimensionado}x{alto_redimensionado} usando LANCZOS.")
+                except AttributeError:
+                    # Si Image.LANCZOS no está disponible, usamos Image.ANTIALIAS para versiones antiguas de Pillow
+                    self.imagen_escalada = self.imagen_original.resize(
+                        (ancho_redimensionado, alto_redimensionado), Image.ANTIALIAS
+                    )
+                    print(f"Imagen escalada a {ancho_redimensionado}x{alto_redimensionado} usando ANTIALIAS.")
             except Exception as e:
                 print(f"Error al escalar la imagen: {e}")
+        else:
+            print("Primero debes cargar la imagen antes de escalarla.")
 
     def mostrar_imagen(self):
         """Mostrar la imagen escalada en la ventana."""
@@ -56,3 +69,4 @@ class VentanaImagen(Ventana):
         if self.imagen_original:
             self.escalar_imagen(ancho_ventana, alto_ventana)
             self.mostrar_imagen()
+
