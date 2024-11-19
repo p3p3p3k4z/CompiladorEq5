@@ -1,4 +1,4 @@
-from ventana import VentanaBase
+from ventana import Ventana
 from boton import Boton
 
 # Crear la ventana principal
@@ -47,7 +47,7 @@ def abrir_ventana_nueva():
     nueva_ventana.ejecutar()
 
 # Asignar el comando al botón "Iniciar"
-iniciar_button.boton.config(command=iniciar_proceso)#aqui metes la funcion
+iniciar_button.boton.config(command=iniciar_proceso)
 
 # Crear un nuevo botón "Abrir Nueva Ventana" deshabilitado inicialmente
 abrir_nueva_ventana_button = Boton(ventana.root, text="Abrir Nueva Ventana", command=abrir_ventana_nueva)
