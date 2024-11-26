@@ -1,3 +1,3 @@
-from ventana_principal import *
+from VentanaPrincipal import *
 
-VentanaPrincipal()
+ventanaPrincipal()

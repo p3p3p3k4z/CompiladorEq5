@@ -1,0 +1,7 @@
+D -> T L ;
+L -> id L
+L -> , id L
+L -> λ
+T -> float
+T -> int
+T-> λ

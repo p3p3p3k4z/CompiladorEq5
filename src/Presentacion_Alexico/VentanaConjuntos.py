@@ -1,9 +1,20 @@
+import sys
+import os
+
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
 
-from VentanaThompson import * #reutilizacion de elemntos
-from analizadorLexico_conjuntos import *
+lib_path2 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'AnalizadorLexico_alexico'))
+sys.path.append(lib_path2)
+lib_path3 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'AnalizadorLexico_thompson'))
+sys.path.append(lib_path3)
+lib_path4 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'AnalizadorLexico_conjuntos'))
+sys.path.append(lib_path4)
+
+from thompson_aux import *
+from conjuntos_aux import *
+from alexico_aux import *
 
 def Conjuntos_afn():
     font1=("Times New Roman",12)
@@ -400,7 +411,7 @@ def abrirArchivo(alphaEntry,erEntry,lexWindow):
     lexWindow.grab_set()
     alphaEntry.delete(0,END)
     erEntry.delete(0,END)
-    direccionArchivo=filedialog.askopenfilename(initialdir=r"Pruebas_expresiones_reg/",title="Abrir",filetypes=(("texto","*.txt"),))
+    direccionArchivo=filedialog.askopenfilename(initialdir=r"../../Pruebas_expresiones_reg/",title="Abrir",filetypes=(("texto","*.txt"),))
     archivo=open(direccionArchivo)
     alfabeto=archivo.readline()
     expresionRegular =archivo.readline()

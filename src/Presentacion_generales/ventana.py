@@ -1,6 +1,6 @@
 from tkinter import Tk
 
-class VentanaBase:
+class Ventana:
     def __init__(self, ancho=400, alto=300, titulo="Ventana"):
         self.root = Tk()
         self.root.geometry(f"{ancho}x{alto}")
