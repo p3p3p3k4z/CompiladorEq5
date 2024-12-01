@@ -11,11 +11,13 @@
 ### Algoritmo de thompson
 - Desabilitar boton de inspeccionar y limpiar
 - Colores
+- Hacer la ventana a principal, debido a que se sobrepone la ventana menu
 - Pasar a customertkinter (opcional)
 
 ### Construccion de Conjuntos
 - Desabilitar boton de inspeccionar y limpiar
 - Colores
+- Hacer la ventana a principal, debido a que se sobrepone la ventana menu
 - Pasar a customertkinter (opcional)
 
 ### Algoritmo analizador lexico
@@ -30,7 +32,7 @@ interfaz:
 - componer el boton de inicio
 - Pasarlo a customertkinter
 - lanzar IDE para codigo ejemplo "geany codigo1.c" o "notepad codigo1.c"
-- Hacer la ventana a principal como se hiceron las anteriores, debido a que se sobrepone la ventana menu
+- Hacer la ventana a principal, debido a que se sobrepone la ventana menu
 - Crear el boton limpiar
 - Desabilitar botones
 
