@@ -1,8 +1,8 @@
 # ACTUALIZACIONES
--Implementacion de Tabla LR
--Correcion de carpetas y rutas
--Se conocieron mas errores
--bug musica
+- Implementacion de Tabla LR
+- Correcion de carpetas y rutas
+- Se conocieron mas errores
+- bug musica
 
 # CORRECCIONES
 - Correcion de ruta para primeros y siguienteS en el nuevo codigo. Ya que no se ejecutaba correctamente
@@ -41,6 +41,7 @@ interfaz:
 - Crear la interfaz conforme al nuevo codigo , basarse en los criterios mencionados ya en las correciones
 
 ### Canonica
+- Quitar las comas a la hora de implimir
 - Aun no hay correciones para esta
 
 
