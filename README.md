@@ -42,7 +42,6 @@ interfaz:
 
 ### Canonica
 - Quitar las comas a la hora de implimir
-- Aun no hay correciones para esta
 
 
 
