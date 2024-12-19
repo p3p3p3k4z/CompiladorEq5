@@ -9,17 +9,17 @@
 ---
 
 # IMPLEMENTACIONES FALTANTES
-###Algoritmo de thompson
+### Algoritmo de thompson
 - Desabilitar boton de inspeccionar y limpiar
 - Colores
 - Pasar a customertkinter (opcional)
 
-###Construccion de Conjuntos
+### Construccion de Conjuntos
 - Desabilitar boton de inspeccionar y limpiar
 - Colores
 - Pasar a customertkinter (opcional)
 
-###Algoritmo analizador lexico
+### Algoritmo analizador lexico
 codigo:
 - Verificar las pruebas
 - Tabla de simbolos (ids)
