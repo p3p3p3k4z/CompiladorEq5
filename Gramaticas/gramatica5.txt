@@ -1,0 +1,9 @@
+S V H T
+; id [ nint ] int char float
+S->T V ;
+V->id H
+H->[ nint ] H
+H->λ
+T->int
+T->char
+T->float

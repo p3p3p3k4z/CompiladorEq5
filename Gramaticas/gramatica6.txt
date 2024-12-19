@@ -1,0 +1,7 @@
+S V C
+i t a e b
+S->i C t S V
+S->a
+V->e S
+V->λ
+C->b

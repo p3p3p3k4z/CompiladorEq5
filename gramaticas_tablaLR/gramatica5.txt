@@ -1,0 +1,9 @@
+D L T
+id ; , float int
+D->D D
+D->λ
+D->T id L ;
+L->, id L
+L->λ
+T->float
+T->int
