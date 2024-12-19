@@ -9,17 +9,17 @@
 ---
 
 # IMPLEMENTACIONES FALTANTES
-### Algoritmo de thompson
+### Algoritmo de thompson 1
 - Desabilitar boton de inspeccionar y limpiar
 - Colores
 - Pasar a customertkinter (opcional)
 
-### Construccion de Conjuntos
+### Construccion de Conjuntos 2
 - Desabilitar boton de inspeccionar y limpiar
 - Colores
 - Pasar a customertkinter (opcional)
 
-### Algoritmo analizador lexico
+### Algoritmo analizador lexico 3
 codigo:
 - Verificar las pruebas
 - Tabla de simbolos (ids)
@@ -35,11 +35,14 @@ interfaz:
 - Crear el boton limpiar
 - Desabilitar botones
 
-### Primeros y Siguientes
+### Primeros y Siguientes 4 
 - Crear la interfaz conforme al nuevo codigo , basarse en los criterios mencionados ya en las correciones
 
-### Canonica
+### Canonica 5
 - El profe quiere que se vea mejor la coleccion. Que le quitemos las , en las listas ejemplo: [a,b,c] --> [a b c]
+
+### TABLA LR 6
+- Aun sin observaciones, pero si saben de algo lo pueden componer
 
 
 
