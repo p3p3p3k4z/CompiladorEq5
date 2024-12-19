@@ -39,7 +39,7 @@ interfaz:
 - Crear la interfaz conforme al nuevo codigo , basarse en los criterios mencionados ya en las correciones
 
 ### Canonica
-- Aun no hay correciones para esta
+- El profe quiere que se vea mejor la coleccion. Que le quitemos las , en las listas ejemplo: [a,b,c] --> [a b c]
 
 
 
