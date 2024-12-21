@@ -1,6 +1,7 @@
 # ACTUALIZACIONES
 - analisis sintactico
 - correciones de rutas
+- Nuevo PYS falta interfaz custom, por el momento no ha sido implementada pero ya es funcional
 
 # CORRECCIONES
 - Correcion de ruta para primeros y siguienteS en el nuevo codigo. Ya que no se ejecutaba correctamente
@@ -34,9 +35,6 @@ interfaz:
 - Hacer la ventana a principal como se hiceron las anteriores, debido a que se sobrepone la ventana menu
 - Crear el boton limpiar
 - Desabilitar botones
-
-### Primeros y Siguientes 4 
-- Crear la interfaz conforme al nuevo codigo , basarse en los criterios mencionados ya en las correciones
 
 ### Canonica 5
 - El profe quiere que se vea mejor la coleccion. Que le quitemos las , en las listas ejemplo: [a,b,c] --> [a b c]
