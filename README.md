@@ -1,9 +1,13 @@
 # Proyecto Compilador
 Este proyecto tiene la finalidad implementar un Compilador
 
-- Thompson (Expresión regular -> AFN) 18 de Octubre
-- Construcción de conjuntos (AFN -> AFD) 25 de Octubre
-- Analisis Sintactico 11 de Noviembre
+- Thompson (Expresión regular -> AFN) 
+- Construcción de conjuntos (AFN -> AFD) 
+- Analisis lexico 11 de Noviembre
+- Primeros y Siguientes
+- Coleccion Canonica
+- Tabla LR
+- Analisis Sintactico
 
 ## Ejecutar
 ```bash
