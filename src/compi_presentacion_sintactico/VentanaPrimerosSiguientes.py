@@ -1,129 +1,100 @@
-#ESTE ARCHIVO ES PARA LA INTERFAZ DEL CODIGO QUE HIZO CRISTIAN AUN SIGUE CON ERRORES
-import sys
+import tkinter as tk
+from tkinter import filedialog, messagebox, ttk
 import os
-import customtkinter as ctk
-from tkinter import filedialog, messagebox
+import sys
 
-# Agregar el directorio con la implementación de Primeros y Siguientes al path
 lib_path2 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_analizadorSintacticoLR_primerosYsiguientes'))
 sys.path.append(lib_path2)
 
 from Primeros_Siguientes import *
 
-# Variables globales para gestionar los datos y botones
-cargar_gramatica_obj = None
-primero_obj = None
-siguiente_obj = None
-gramatica_text_global = None
-primeros_text_global = None
-siguientes_text_global = None
+# Variable global para almacenar la dirección del archivo
+direccionArchivo = ""
 
-def VentanaPYS():
-    # Configuración inicial de la ventana
-    ctk.set_appearance_mode("dark")
-    ctk.set_default_color_theme("blue")
+# Función para mostrar resultados en la tabla
+def mostrarResultados(datos):
+    # Limpiar la tabla
+    for item in treeview.get_children():
+        treeview.delete(item)
 
-    ventana = ctk.CTk()
-    ventana.title("Calculadora de PRIMERO y SIGUIENTE - Equipo #5")
-    ventana.geometry("1200x700")
+    # Insertar los datos en la tabla
+    for item in datos:
+        noTerminal = item[0]
+        primeros = ' '.join(item[1])
+        siguientes = ' '.join(item[2])
+        treeview.insert("", "end", values=(noTerminal, primeros, siguientes))
 
-    # Título principal
-    titulo = ctk.CTkLabel(ventana, text="Calculadora de PRIMERO y SIGUIENTE\nEquipo #5", font=("Helvetica", 18, "bold"))
-    titulo.pack(pady=10)
+# Función para cargar y obtener la dirección del archivo
+def obtenerDireccion():
+    global direccionArchivo
+    direccionArchivo = cargarDireccion()
+    if not direccionArchivo:
+        print("Error al cargar archivo")
+        return
+    mostrarContenidoArchivo(direccionArchivo)  # Mostrar contenido del archivo
+    btnCalcular.config(state=tk.NORMAL)  # Habilitar el botón "Calcular Primeros y Siguientes"
+    btnLimpiar.config(state=tk.NORMAL)
 
-    # Marco para botones
-    boton_frame = ctk.CTkFrame(ventana)
-    boton_frame.pack(pady=5)
+# Función para mostrar el contenido del archivo en el área de texto
+def mostrarContenidoArchivo(direccionArchivo):
+    try:
+        with open(direccionArchivo, 'r') as file:
+            contenido = file.read()
+            textArea.delete(1.0, tk.END)  # Limpiar el área de texto
+            textArea.insert(tk.END, contenido)  # Insertar el contenido del archivo
+    except Exception as e:
+        messagebox.showerror("Error", f"No se pudo leer el archivo: {str(e)}")
 
-    global cargar_btn, mostrar_primero_btn, mostrar_siguiente_btn, limpiar_btn
+# Función para calcular Primeros y Siguientes
+def calcular():
+    global direccionArchivo
+    try:
+        noTerminales, terminales = cargarDatos(direccionArchivo)
+        reglasProduccion = getReglasProduccion(direccionArchivo)
+        datos = mainPyS(noTerminales, terminales, reglasProduccion)
+        mostrarResultados(datos)
+    except Exception as e:
+        messagebox.showerror("Error", f"Ocurrió un error al procesar el archivo: {str(e)}")
 
-    # Botón para cargar gramática
-    cargar_btn = ctk.CTkButton(boton_frame, text="Elegir Gramática", command=cargar_gramatica)
-    cargar_btn.grid(row=0, column=0, padx=10)
+# Función para limpiar el contenido del archivo y la tabla
+def limpiarTabla():
+    global direccionArchivo
+    direccionArchivo = ""  # Limpiar la variable de dirección del archivo
+    textArea.delete(1.0, tk.END)  # Limpiar el área de texto
+    for item in treeview.get_children():
+        treeview.delete(item)  # Limpiar los datos de la tabla
+    btnCalcular.config(state=tk.DISABLED)  # Deshabilitar el botón "Calcular Primeros y Siguientes"
 
-    # Botones para mostrar resultados y limpiar
-    mostrar_primero_btn = ctk.CTkButton(boton_frame, text="Mostrar PRIMERO", command=mostrar_primero, state="disabled")
-    mostrar_primero_btn.grid(row=0, column=1, padx=10)
+# Crear la ventana principal
+ventana = tk.Tk()
+ventana.title("ALGORITMO DE PRIMEROS Y SIGUIENTES")
+ventana.geometry("1000x700")
 
-    mostrar_siguiente_btn = ctk.CTkButton(boton_frame, text="Mostrar SIGUIENTE", command=mostrar_siguiente, state="disabled")
-    mostrar_siguiente_btn.grid(row=0, column=2, padx=10)
+# Crear un frame para los botones y colocarlos verticalmente
+frameBotones = tk.Frame(ventana)
+frameBotones.pack(side=tk.LEFT, padx=10, pady=10, fill=tk.Y)
 
-    limpiar_btn = ctk.CTkButton(boton_frame, text="Limpiar Campos", command=limpiar_campos, state="disabled")
-    limpiar_btn.grid(row=0, column=3, padx=10)
+# Crear los botones
+btnCargar = tk.Button(frameBotones, text="Cargar Archivo", command=obtenerDireccion)
+btnCargar.pack(pady=10, fill=tk.X)
 
-    # Marco para los cuadros de texto
-    output_frame = ctk.CTkFrame(ventana)
-    output_frame.pack(pady=15)
+btnCalcular = tk.Button(frameBotones, text="Calcular Primeros y Siguientes", command=calcular, state=tk.DISABLED)
+btnCalcular.pack(pady=10, fill=tk.X)
 
-    global gramatica_text_global, primeros_text_global, siguientes_text_global
+btnLimpiar = tk.Button(frameBotones, text="Limpiar Tabla", command=limpiarTabla, state=tk.DISABLED)
+btnLimpiar.pack(pady=10, fill=tk.X)
 
-    # Textbox para mostrar la gramática
-    gramatica_text_global = ctk.CTkTextbox(output_frame, height=400, width=400)
-    gramatica_text_global.grid(row=0, column=0, padx=10)
+# Crear un Treeview para mostrar los resultados sin la columna "Contenido"
+columns = ("NoTerminal", "Primeros", "Siguientes")
+treeview = ttk.Treeview(ventana, columns=columns, show="headings")
+treeview.heading("NoTerminal", text="No Terminal")
+treeview.heading("Primeros", text="Primeros")
+treeview.heading("Siguientes", text="Siguientes")
+treeview.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-    # Textbox para mostrar conjuntos PRIMERO
-    primeros_text_global = ctk.CTkTextbox(output_frame, height=400, width=400)
-    primeros_text_global.grid(row=0, column=1, padx=10)
+# Crear un área de texto para mostrar el contenido del archivo
+textArea = tk.Text(ventana, height=10, width=80)
+textArea.pack(pady=10)
 
-    # Textbox para mostrar conjuntos SIGUIENTE
-    siguientes_text_global = ctk.CTkTextbox(output_frame, height=400, width=400)
-    siguientes_text_global.grid(row=0, column=2, padx=10)
-
-    ventana.mainloop()
-
-# Función para cargar gramática desde archivo
-def cargar_gramatica():
-    archivo_path = filedialog.askopenfilename(
-        initialdir=os.path.abspath("../../Gramaticas"),
-        filetypes=[("Text Files", "*.txt")],
-        title="Seleccionar archivo de gramática"
-    )
-    if archivo_path:
-        try:
-            global cargar_gramatica_obj, primero_obj
-            cargar_gramatica_obj = CargarGramatica(archivo_path)
-            primero_obj = Primero(cargar_gramatica_obj)
-
-            # Mostrar la gramática en el Textbox
-            with open(archivo_path, 'r') as file:
-                gramatica_text_global.delete("0.0", "end")
-                gramatica_text_global.insert("0.0", file.read())
-
-            # Habilitar botones
-            mostrar_primero_btn.configure(state="normal")
-            limpiar_btn.configure(state="normal")
-            cargar_btn.configure(state="disabled")
-        except Exception as e:
-            messagebox.showerror("Error", f"Error al cargar la gramática: {str(e)}")
-
-# Función para calcular y mostrar el conjunto PRIMERO
-def mostrar_primero():
-    global siguiente_obj
-    resultado_primero = primero_obj.resultados()
-    primeros_text_global.delete("0.0", "end")
-    primeros_text_global.insert("0.0", resultado_primero)
-
-    # Preparar para calcular SIGUIENTE
-    siguiente_obj = Siguientes(cargar_gramatica_obj, primero_obj)
-    mostrar_primero_btn.configure(state="disabled")
-    mostrar_siguiente_btn.configure(state="normal")
-
-# Función para calcular y mostrar el conjunto SIGUIENTE
-def mostrar_siguiente():
-    resultado_siguiente = siguiente_obj.resultados()
-    siguientes_text_global.delete("0.0", "end")
-    siguientes_text_global.insert("0.0", resultado_siguiente)
-
-    mostrar_siguiente_btn.configure(state="disabled")
-
-# Función para limpiar los cuadros de texto
-def limpiar_campos():
-    gramatica_text_global.delete("0.0", "end")
-    primeros_text_global.delete("0.0", "end")
-    siguientes_text_global.delete("0.0", "end")
-
-    # Restaurar el estado de los botones
-    cargar_btn.configure(state="normal")
-    mostrar_primero_btn.configure(state="disabled")
-    mostrar_siguiente_btn.configure(state="disabled")
-    limpiar_btn.configure(state="disabled")
+# Iniciar la interfaz
+ventana.mainloop()

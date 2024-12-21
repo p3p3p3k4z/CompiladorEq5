@@ -157,14 +157,10 @@ def verificarSiguientes(simbolo,listaSiguientes):#Verifica si el simbolo ya esta
             return True,i[1]
     return False,None
 
-def mainPyS():#falla gramatica6
-    direccionArchivo = cargarDireccion()  # Use the file dialog to select the file
+def mainPyS(noTerminales,terminales,reglasProduccion):#falla gramatica6
     lista_siguientes=[]
     datos=[]
-    noTerminales, terminales = cargarDatos(direccionArchivo)
-    reglasProduccion = getReglasProduccion(direccionArchivo)
     primeros = getPrimeros(noTerminales, terminales, reglasProduccion, noTerminales[0])
-
     for var in noTerminales:
         primeros = getPrimeros(noTerminales, terminales, reglasProduccion, var)
         siguientes = getSiguientes(noTerminales, terminales, reglasProduccion, var, lista_siguientes)
@@ -172,6 +168,9 @@ def mainPyS():#falla gramatica6
         datos.append(tupla)
     return datos
 
-# Run the function
-print(mainPyS())
+#direccionArchivo = cargarDireccion()  # AQUI BUSCAMOS LA RAMATICA A USAR
+#noTerminales, terminales = cargarDatos(direccionArchivo)
+#reglasProduccion = getReglasProduccion(direccionArchivo)
+
+#print(mainPyS(noTerminales,terminales,reglasProduccion))
 
