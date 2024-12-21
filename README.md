@@ -3,6 +3,7 @@
 - Correcion de carpetas y rutas
 - Se conocieron mas errores
 - bug musica
+- Aparentemente no funiona en windows
 
 # CORRECCIONES
 - Correcion de ruta para primeros y siguienteS en el nuevo codigo. Ya que no se ejecutaba correctamente
