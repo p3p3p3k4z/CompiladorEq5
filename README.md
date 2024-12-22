@@ -2,6 +2,7 @@
 - analisis sintactico
 - correciones de rutas
 - Nuevo PYS falta interfaz custom, por el momento no ha sido implementada pero ya es funcional
+- Interfaz auxiliar en caso de fallar la principal usando solamente tkinter
 
 # CORRECCIONES
 - Correcion de ruta para primeros y siguienteS en el nuevo codigo. Ya que no se ejecutaba correctamente
