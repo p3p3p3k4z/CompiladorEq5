@@ -20,7 +20,7 @@ image_path = os.path.join(base_path, '..', '..', 'imagenes', 'portada.png')
 
 from VentanaThompson import Conjuntos
 from VentanaConjuntos import Conjuntos_afn
-from VentanaAnalizadorLexico import VentanaAlexico #corregir los errores dados en el github
+from VentanaAlexicov2 import Prueba #corregir los errores dados en el github
 from VentanaPrimerosSiguientes import ventanaPYS_Aux 
 #from VentanaPYS_YamilJose import *
 from VentanaCanonica import ventana_coleccion
@@ -85,7 +85,7 @@ def ventanaPrincipal_Aux():
     opc = Menu(menuop, tearoff=0)
     opc.add_command(label="Algoritmo de Thomson(AFND)", command=lambda: Conjuntos(), font=font1)
     opc.add_command(label="Construcción de conjuntos(AFD)", command=lambda: Conjuntos_afn(), font=font1)
-    opc.add_command(label="Analizador Lexico", command=lambda: VentanaAlexico(), font=font1)
+    opc.add_command(label="Analizador Lexico", command=lambda: Prueba(), font=font1)
     
     opc2 = Menu(menuop, tearoff=0)
     opc2.add_command(label="Explorador de Archivos", command=lambda: abrir(), font=font1)

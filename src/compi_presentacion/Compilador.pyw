@@ -16,5 +16,5 @@ except SyntaxError as e:
     print(f"Error de sintaxis en VentanaPrincipal: {e}")
     ventanaPrincipal_Aux()
 else:
-	print("posible error?");
+	print("posible error?,descomenta esta linea");
 	#ventanaPrincipal_Aux()
