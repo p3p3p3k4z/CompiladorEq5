@@ -1,12 +1,13 @@
 # ACTUALIZACIONES
 - analisis sintactico
 - correciones de rutas
-- Nuevo PYS falta interfaz custom, por el momento no ha sido implementada pero ya es funcional
+- Nuevo PYS y Alexico falta interfaz custom, por el momento no ha sido implementada pero ya es funcional
 - Interfaz auxiliar en caso de fallar la principal usando solamente tkinter
 
 # CORRECCIONES
 - Correcion de ruta para primeros y siguienteS en el nuevo codigo. Ya que no se ejecutaba correctamente
 - Nuevas gramaticas para primeros y siguientes
+- Mejors en analizador lexico
 
 ---
 
@@ -23,16 +24,13 @@
 
 ### Algoritmo analizador lexico 3
 codigo:
+
 - Verificar las pruebas
-- Tabla de simbolos (ids)
-- Tabla de errores 
 - Contar el \n y ++ << (juntos)
+  
 interfaz:
 - colores
 - tamaño
-- componer el boton de inicio
-- Pasarlo a customertkinter
-- lanzar IDE para codigo ejemplo "geany codigo1.c" o "notepad codigo1.c"
 - Hacer la ventana a principal como se hiceron las anteriores, debido a que se sobrepone la ventana menu
 - Crear el boton limpiar
 - Desabilitar botones
