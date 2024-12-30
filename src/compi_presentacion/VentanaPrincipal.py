@@ -3,7 +3,7 @@ import sys
 from customtkinter import *
 import pygame
 
-# Asegúrate de que las rutas de las librerías sean correctas
+# Aqui van las implementaciones
 lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_presentacion_alexico'))
 sys.path.append(lib_path)
 lib_path2 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_presentacion_sintactico'))
@@ -15,17 +15,18 @@ sys.path.append(lib_path4)
 lib_path5 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_analizadorSintactico_analizadorLR'))
 sys.path.append(lib_path5)
 
+#Aqui van los archivos
 base_path = os.path.abspath(os.path.dirname(__file__))
 listado_image_path = os.path.join(base_path, '..', '..', 'imagenes', 'portada_gato.png')
 icon_path = os.path.join(base_path, '..', '..', 'imagenes', 'icon_music.png')
 AUDIO_PATH = os.path.join(base_path, '..', '..', 'musica', 'main_theme.ogg')
 
-from VentanaConjuntos import *
-from VentanaThompson import *
-from VentanaAnalizadorLexico import * #corregir los errores dados en el github
-#from VentanaPrimerosSiguientes import * #crear nueva interfaz
-from VentanaPYS_YamilJose import *
-from VentanaCanonica import *
+from VentanaThompson import Conjuntos
+from VentanaConjuntos import Conjuntos_afn
+from VentanaAlexicov2 import Prueba #corregir los errores dados en el github
+from VentanaPrimerosSiguientes import ventanaPYS_Aux 
+#from VentanaPYS_YamilJose import *
+from VentanaCanonica import ventana_coleccion
 #from Interfaz import *
 from Tabla_Analizador_Sintacticov2 import InterfazTablaAS
 from analisisSintacticoLR import analisisSintactico
@@ -176,7 +177,7 @@ def abrirMenuLexico():
     CTkButton(
         menu_lexico, 
         text="Analizador Léxico", 
-        command=lambda: VentanaAlexico(), 
+        command=lambda: Prueba(), 
         corner_radius=10,
         font=("Times New Roman", 12)
     ).pack(pady=10)
@@ -191,8 +192,8 @@ def abrirMenuSintactico():
 
     CTkButton(
         menu_sintactico, 
-        text="Primeros y Siguientes (EN PROCESO DE REPARACION)",
-        command=lambda: ventanita_PYS_YJ(), 
+        text="Primeros y Siguientes",
+        command=lambda: ventanaPYS_Aux(), 
         corner_radius=10,
         font=("Times New Roman", 12)
     ).pack(pady=10)

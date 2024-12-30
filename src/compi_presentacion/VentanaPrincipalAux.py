@@ -28,7 +28,7 @@ from VentanaCanonica import ventana_coleccion
 from Tabla_Analizador_Sintacticov2 import InterfazTablaAS
 from analisisSintacticoLR import analisisSintactico
 
-#no implementado
+#no implementado, mera dcoracion
 def abrir():
     fichero = filedialog.askopenfilename(title="Abrir", initialdir="D:", filetypes=(("ficheros de texto", "*.txt"), ("ficheros de python", "*.py")))
     if fichero:
