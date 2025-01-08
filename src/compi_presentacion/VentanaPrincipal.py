@@ -23,7 +23,7 @@ AUDIO_PATH = os.path.join(base_path, '..', '..', 'musica', 'main_theme.ogg')
 
 from VentanaThompson import Conjuntos
 from VentanaConjuntos import Conjuntos_afn
-from VentanaAlexicov2 import Prueba #corregir los errores dados en el github
+from VentanaAlexicov2Custom import VentanaAlexicoCustom
 from VentanaPrimerosSiguientes import ventanaPYS_Aux 
 #from VentanaPYS_YamilJose import *
 from VentanaCanonica import ventana_coleccion
@@ -32,8 +32,8 @@ from Tabla_Analizador_Sintacticov2 import InterfazTablaAS
 from analisisSintacticoLR import analisisSintactico
 
 # Configuración global de customtkinter
-set_appearance_mode("dark")  # Opciones: "dark" o "light"
-set_default_color_theme("blue")  # Tema de colores
+set_appearance_mode("dark") 
+set_default_color_theme("green")  # Tema de colores
 
 # Inicializar pygame para audio
 pygame.mixer.init()
@@ -177,7 +177,7 @@ def abrirMenuLexico():
     CTkButton(
         menu_lexico, 
         text="Analizador Léxico", 
-        command=lambda: Prueba(), 
+        command=lambda: VentanaAlexicoCustom(), 
         corner_radius=10,
         font=("Times New Roman", 12)
     ).pack(pady=10)
