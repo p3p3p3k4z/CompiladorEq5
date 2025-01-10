@@ -289,7 +289,7 @@ def printTableConjuntos(alfabeto,tabla,canvas,lexWindow,arrLabels,er):
 
         """Imprime los labels fantasma, el alfabeto y la palabra Estado"""
         label_fantasma=Label(tabla,text="     ",width=10).grid(row=0,column=0)#Imprime una columna vacía
-        fila=1 #Fila de la tabla
+        fila=0 #Fila de la tabla
         columna=1#Columna de la tabla
 
         """Verifica si el alfabeto contiene la palabra reservada digito o letra"""
