@@ -1,0 +1,1 @@
+r'\b(autobreak|case|const|continue|default|enum|extern|goto|include|define|ifdef|ifndef|endif|undef|error|pragma|register|short|signed|sizeof|static|struct|typedef|union|unsigned|volatile|main|printf|scanf|return|switch|do|else|for|if|while|char|void|long|double|int|float|string)\b',
