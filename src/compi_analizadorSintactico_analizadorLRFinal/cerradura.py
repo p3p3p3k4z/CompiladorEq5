@@ -26,3 +26,4 @@ def cerradura(conjuntoI, reglas):
                     nueva_I.append(nv_regla)            # Y se agrega a la nueva lista de reglas
 
     return nueva_I
+

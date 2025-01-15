@@ -1,2 +1,0 @@
-letrasdigitos
-((letras).((letras|digitos)*))

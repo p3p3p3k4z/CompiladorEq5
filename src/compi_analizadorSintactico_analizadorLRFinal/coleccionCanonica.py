@@ -1,3 +1,4 @@
+
 from Ir_a_Algoritmo import *
 from cerradura import *
 class TablaColeccionCanonica:

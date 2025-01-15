@@ -1,8 +1,0 @@
-D L T
-id , int float
-D ->T L
-L ->id , L
-L ->λ
-T ->int
-T ->Float
-T ->λ

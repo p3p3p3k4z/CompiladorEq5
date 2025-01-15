@@ -464,9 +464,9 @@ def file_breakdown (lines, tokenList,symbolList_prog,errorList_prog):
                 #print("flag_comilla:", flag_comilla_simple)
             
                 if char == "'" and flag_comilla_simple == True:
-                    tokenList.append(element_TokenTable(aux,"literalCar",nline)) #Literal caracter
+                    tokenList.append(element_TokenTable(aux,"literalcar",nline)) #Literal caracter
                 else:
-                    tokenList.append(element_TokenTable(aux, "varCadena", nline)) #Agregamos a la lista de tokens
+                    tokenList.append(element_TokenTable(aux, "varcadena", nline)) #Agregamos a la lista de tokens
                 flag_string = False
                 aux=""
             elif (char == '"' and flag_string == False) or (char == "'" and flag_string == False): #Es una cadena, se empieza a guardar y se enciende la bandera y asi si esta la bandera encendida esperamos el siguiente

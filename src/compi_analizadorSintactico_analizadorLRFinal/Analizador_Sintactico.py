@@ -5,29 +5,36 @@ from lexico import *
 from Analizador_Lexico import *
 from TablaAnalisisSintactico import *
 from PrimerosYSiguientes import mainPyS
+
+import os
+import sys
+
+base_path = os.path.abspath(os.path.dirname(__file__))
+gramatica_path = os.path.join(base_path, '..', '..', 'Pruebas_Archivos_Entrada_JAVA', 'entradaLR.txt')
+
 def analizadorSintacticoJava():
     VentanaPrincipal =Toplevel()
     VentanaPrincipal.title("Analizador sintáctico")
     try:
         VentanaPrincipal.state("zoomed")
     except:
-        VentanaPrincipal.attributes('-zoomed', True)
-    VentanaPrincipal.config(background="#363062")
+        VentanaPrincipal.attributes('-zoomed', True) 
+    VentanaPrincipal.config(background="#F6C794")
     encabezado(VentanaPrincipal)
     VentanaPrincipal.mainloop()
 
 def encabezado(VentanaPrincipal):
     font1=("Times New Roman",14)
     font2=("Times New Roman",20)
-    archivoLabel=Label(VentanaPrincipal,text="Seleccionar Archivo:",font=font1,width=20,background="#363062",foreground="white")
+    archivoLabel=Label(VentanaPrincipal,text="Seleccionar Archivo:",font=font1,width=20,background="#FF9D23",foreground="white")
     archivoLabel.place(x=60,y=30)
-    archivoButton=Button(VentanaPrincipal,text="Abrir archivo",width=20,command=lambda:abrirArchivo(VentanaPrincipal),bg="#F99417",font=font1)
+    archivoButton=Button(VentanaPrincipal,text="Cargar Gramatica",foreground="white",width=20,command=lambda:abrirArchivo(VentanaPrincipal),bg="#FB9EC6",font=font1)
     archivoButton.place(x=300,y=20)
-    tokenButton=Button(VentanaPrincipal,text="Seleccionar tira de tokens",width=20,bg="#F99417",font=font1,command=lambda:abrirArchivo1(VentanaPrincipal))
+    tokenButton=Button(VentanaPrincipal,text="Abrir Archivo",foreground="white",width=20,bg="#FB9EC6",font=font1,command=lambda:abrirArchivo1(VentanaPrincipal))
     tokenButton.place(x=300,y=100)
-    ImprimirResultad0s=Button(VentanaPrincipal,text="Imprimir Resultados",width=20,bg="#F99417",font=font1,command=lambda:imprimirResultados(VentanaPrincipal))
+    ImprimirResultad0s=Button(VentanaPrincipal,text="Imprimir Resultados",foreground="white",width=20,bg="#FB9EC6",font=font1,command=lambda:imprimirResultados(VentanaPrincipal))
     ImprimirResultad0s.place(x=500,y=60)
-    limpiarButton=Button(VentanaPrincipal,text="Limpiar",width=20,bg="#F99417",font=font1,command=lambda:limpiar(VentanaPrincipal))
+    limpiarButton=Button(VentanaPrincipal,text="Limpiar",foreground="white",width=20,bg="#FB9EC6",font=font1,command=lambda:limpiar(VentanaPrincipal))
     limpiarButton.place(x=700,y=60)
 
 def cargarGramatica(Ventana,direccionArchivo):
@@ -46,6 +53,7 @@ def cargarGramatica(Ventana,direccionArchivo):
         Gramatica.append(grama) #aqui se guarda la gramatica sin el salto de linea
         mostrarRegla=Label(frameGramatica,text=str(linea),font=("Times New Roman",14),width=20)
         mostrarRegla.grid(row=contador,column=0)
+        mostrarRegla.config(background="#EFB6C8")
         contador+=1
 
 def abrirArchivo(Ventana):
@@ -60,10 +68,28 @@ def abrirArchivo1(Ventana):
     global tiraTokens
     Ventana.grab_set()
     username=getpass.getuser()
-    ruta_proyecto = r"C:\Users\{username}\Documents\ProyectoCompiladores"
+    ruta_proyecto = gramatica_path 
     direccionArchivo=filedialog.askopenfilename(initialdir=ruta_proyecto,title="Abrir Archivo",filetypes=(("java","*.java"),))
     tiraTokens = ObtenerTiraTokensExterna(direccionArchivo)
-    print("Tira de tokens recibida en el sintáctico:\n", tiraTokens)
+    #SUSTITUIMOS LOS == y simbolos compuestos por dos caracteres para que sean detectados
+    tiraTokens = tiraTokens.replace("<","menorque")
+    tiraTokens = tiraTokens.replace(">","mayorque")
+    tiraTokens = tiraTokens.replace("==","igualigual")
+    tiraTokens = tiraTokens.replace(">=","mayorigual")
+    tiraTokens = tiraTokens.replace("<=","menorigual")
+    tiraTokens = tiraTokens.replace("!=","diferente")
+    tiraTokens = tiraTokens.replace("&&","and")
+    tiraTokens = tiraTokens.replace("||","or")
+    tiraTokens = tiraTokens.replace("++","masmas")
+    tiraTokens = tiraTokens.replace("--","menosmenos")
+    tiraTokens = tiraTokens.replace("+=","masigual")
+    tiraTokens = tiraTokens.replace("-=","menosigual")
+    tiraTokens = tiraTokens.replace("*=","porigual")
+    tiraTokens = tiraTokens.replace("/=","entredosigual")
+    tiraTokens = tiraTokens.replace("%=","modigual")
+    tiraTokens = tiraTokens.replace("-", "resta")
+    tiraTokens = tiraTokens.replace("String", "string")
+    tiraTokens("Tira de tokens recibida en el lexico:\n", tiraTokens)
 
 
 def imprimirResultados(Ventana):
@@ -75,12 +101,13 @@ def imprimirResultados(Ventana):
     try:
         ventanaResultados.state("zoomed")
     except:
-        ventanaResultados.attributes('-zoomed', True)
+        ventanaResultados.attributes('-zoomed', True) 
     ventanaResultados.grab_set()
-    frameResultados=Frame(ventanaResultados,width=300,height=600)
+    frameResultados=Frame(ventanaResultados,width=600,height=600)
     frameResultados.place(x=60,y=100)
     ventana2=Toplevel()
     frame2=Frame(ventana2,width=300,height=600)
+    
     #Esto es lo que hay que arreglar
     datos,reglas=ImprimirResultados2(ventana2,frame2,direccionArchivo2)
     ventana2.destroy()
@@ -113,22 +140,56 @@ def imprimirResultados(Ventana):
     print("funcion")
     TablaLr(variable,arreglosimbolos,tira,arreGramatica,Ventana)
     ventanaResultados.grab_release()
-
     
+    
+
 def TablaLr(variable,simbolos,tira,arreGramatica,Ventana):
     Ventana.grab_set()
     tabla=Frame(Ventana,width=900,height=600)
     tabla.place(x=300,y=150)
+    tabla.config(background="#F6C794")
+    canvas=Canvas(Ventana,width=1100,height=900)
+    canvas.place(x=300,y=150)
+
+    def on_arrow_key(event):
+            if event.keysym == "Left":
+                canvas.xview_scroll(-1, "units")
+            elif event.keysym == "Right":
+                canvas.xview_scroll(1, "units")
+            #canvas.config(scrollregion=canvas.bbox("all"))    
+
+    def on_arrow_key_v(event):
+         if event.keysym == "Up":
+             canvas.yview_scroll(-1, "units")
+         elif event.keysym == "Down":
+             canvas.yview_scroll(1, "units")
+         #canvas.config(scrollregion=canvas.bbox("all"))
+    
+    scrollbar=ttk.Scrollbar(canvas, orient="vertical", command=canvas.yview)
+    scrollbar.set(0.0, 1.0)
+    scrollbar.place(x=5, y=50, height=300)
+
+    horizontal_scrollbar = ttk.Scrollbar(canvas, orient="horizontal", command=canvas.xview)
+    horizontal_scrollbar.set(0.0,1.0)
+    horizontal_scrollbar.place(x=0,y=0,width=300)
+
+    tabla=Frame(canvas,width=1470,height=300)
+    canvas.create_window((100, 50), window=tabla, anchor=NW)
+    canvas.configure(yscrollcommand=scrollbar.set,xscrollcommand=horizontal_scrollbar.set)
+    canvas.bind_all("<KeyPress-Left>", on_arrow_key)
+    canvas.bind_all("<KeyPress-Right>", on_arrow_key)
+    canvas.bind_all("<KeyPress-Up>", on_arrow_key_v)
+    canvas.bind_all("<KeyPress-Down>", on_arrow_key_v)
     contadorFila=0
     pila=[]
     accion=[]
     pila.append(0)
     font1=("Times New Roman",14)
-    labelTextPila=Label(tabla,text="Pila",width=20,font=font1,borderwidth=2,relief="solid")
+    labelTextPila=Label(tabla,text="Pila",background="#FF9D23",width=20,font=font1,borderwidth=2,relief="solid")
     labelTextPila.grid(row=contadorFila,column=0)
-    labelTextTira=Label(tabla,text="Entrada",width=30,font=font1,borderwidth=2,relief="solid")
+    labelTextTira=Label(tabla,text="Entrada",width=30,background="#FF9D23",font=font1,borderwidth=2,relief="solid")
     labelTextTira.grid(row=contadorFila,column=1)
-    labelTextSalida=Label(tabla,text="Salida",width=40,font=font1,borderwidth=2,relief="solid")
+    labelTextSalida=Label(tabla,text="Salida",width=40,background="#FF9D23",font=font1,borderwidth=2,relief="solid")
     labelTextSalida.grid(row=contadorFila,column=2,columnspan=2)
     contadorFila+=1
     while((len(tira)>0) & (accion!='Aceptacion') & (accion!='')):
@@ -155,7 +216,7 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana):
                 labelRegla=Label(tabla,text=" ",width=20,font=font1,borderwidth=2,relief="solid")
                 labelRegla.grid(row=contadorFila,column=3)
                 pila.append(a)
-                estadoAgregar=int(accion[1])
+                estadoAgregar=int(accion[1:])
                 pila.append(estadoAgregar)
                 print("contenido de la pila:",pila)
                 print("tira de tokens despues del desplazamiento:",tira)
@@ -167,13 +228,13 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana):
                 labelRegla=Label(tabla,text=" ",width=20,font=font1,borderwidth=2,relief="solid")
                 labelRegla.grid(row=contadorFila,column=3)
                 pila.append(a)
-                estadoAgregar=int(accion[0])
+                estadoAgregar=int(accion)
                 pila.append(estadoAgregar)
                 print("contenido de la pila:",pila)
                 print("tira de tokens despues del desplazamiento:",tira)
             elif(accion[0]=='r'):  #reducir A→β
                 print("es una reduccion")
-                pos=int(accion[1])
+                pos=int(accion[1:])
                 regla=arreGramatica[pos-1]
                 labelSalida=Label(tabla,text=pilaCadena(accion),width=20,font=font1,borderwidth=2,relief="solid")
                 labelSalida.grid(row=contadorFila,column=2)
@@ -182,16 +243,25 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana):
                 labelRegla=Label(tabla,text=str(regla[0])+"->"+str(regla[1]),width=20,font=font1,borderwidth=2,relief="solid")
                 labelRegla.grid(row=contadorFila,column=3)
                 tama=len(regla[1].split(' ')) #calculamos el tamaño de β
-                tama=tama*2 
+                reglasinL=regla[1].split(' ')
+                if(reglasinL[0]=='λ'):
+                    tama=0
+                else:
+                    tama=tama*2 
+                print("tamaño de beta:",tama)
+                print("ctm")
                 for k in range(0,tama):
                     pila.pop()  #pop 2*|β| símbolos
                 print("contenido de la pila despues de eliminar:",pila)
                 pila.append(regla[0])   #push A
                 print("contenido de la pila despues de agregar A:",pila)
-                simbIra=buscarSimbolo(simbolos,pila[len(pila)-1]) 
+                simbIra=buscarSimbolo(simbolos,pila[len(pila)-1])
                 #s=Ir_a[j,A]
-                s=buscarAccion(variable,pila[len(pila)-2]+2,simbIra) 
+                es=int(pila[len(pila)-2])+2
+                print(es)
+                s=buscarAccion(variable,es,simbIra)
                 #push s
+                print(s)
                 pila.append(s)
                 print("contenido de la pila despues de agregar s:",pila)
                 print("tira de tokens despues de la reduccion:",tira)  
@@ -267,8 +337,6 @@ def limpiar(ventana):
     encabezado(ventana)
     
 
-direccionArchivo2=""
-tiraTokens=""
-
+direccionArchivo2=""    
+tiraTokens=gramatica_path
 #analizadorSintacticoJava()
-    

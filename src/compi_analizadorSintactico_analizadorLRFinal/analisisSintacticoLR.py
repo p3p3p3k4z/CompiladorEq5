@@ -4,11 +4,13 @@ from tkinter import ttk
 from lexico import *
 from TablaAnalisisSintactico import *
 from PrimerosYSiguientes import mainPyS
+#Aun no tiene la modificacion de la regla de lambda
 def analisisSintactico():
     VentanaPrincipal =Toplevel()
     VentanaPrincipal.title("Analisis sintactico LR")
     VentanaPrincipal.state("zoomed")
     VentanaPrincipal.config(background="#363062")
+    VentanaPrincipal.iconbitmap("Compiler.ico")
     encabezado(VentanaPrincipal)
 
 def encabezado(VentanaPrincipal):
@@ -24,8 +26,6 @@ def encabezado(VentanaPrincipal):
     ImprimirResultad0s.place(x=500,y=60)
     limpiarButton=Button(VentanaPrincipal,text="Limpiar",width=20,bg="#F99417",font=font1,command=lambda:limpiar(VentanaPrincipal))
     limpiarButton.place(x=700,y=60)
-    
-    VentanaPrincipal.mainloop()
 
 def cargarGramatica(Ventana,direccionArchivo):
     global Gramatica
@@ -111,6 +111,7 @@ def imprimirResultados(Ventana):
     ventanaResultados.grab_release()
 
     
+
 def TablaLr(variable,simbolos,tira,arreGramatica,Ventana):
     Ventana.grab_set()
     tabla=Frame(Ventana,width=900,height=600)
@@ -151,7 +152,7 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana):
                 labelRegla=Label(tabla,text=" ",width=20,font=font1,borderwidth=2,relief="solid")
                 labelRegla.grid(row=contadorFila,column=3)
                 pila.append(a)
-                estadoAgregar=int(accion[1])
+                estadoAgregar=int(accion[1:])
                 pila.append(estadoAgregar)
                 print("contenido de la pila:",pila)
                 print("tira de tokens despues del desplazamiento:",tira)
@@ -163,13 +164,13 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana):
                 labelRegla=Label(tabla,text=" ",width=20,font=font1,borderwidth=2,relief="solid")
                 labelRegla.grid(row=contadorFila,column=3)
                 pila.append(a)
-                estadoAgregar=int(accion[0])
+                estadoAgregar=int(accion)
                 pila.append(estadoAgregar)
                 print("contenido de la pila:",pila)
                 print("tira de tokens despues del desplazamiento:",tira)
             elif(accion[0]=='r'):  #reducir A→β
                 print("es una reduccion")
-                pos=int(accion[1])
+                pos=int(accion[1:])
                 regla=arreGramatica[pos-1]
                 labelSalida=Label(tabla,text=pilaCadena(accion),width=20,font=font1,borderwidth=2,relief="solid")
                 labelSalida.grid(row=contadorFila,column=2)
@@ -178,15 +179,21 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana):
                 labelRegla=Label(tabla,text=str(regla[0])+"->"+str(regla[1]),width=20,font=font1,borderwidth=2,relief="solid")
                 labelRegla.grid(row=contadorFila,column=3)
                 tama=len(regla[1].split(' ')) #calculamos el tamaño de β
-                tama=tama*2 
+                reglasinL=regla[1].split(' ')
+                if(reglasinL[0]=='λ'):
+                    tama=0
+                else:
+                    tama=tama*2 
+                print("tamaño de beta:",tama)
+                print("ctm")
                 for k in range(0,tama):
                     pila.pop()  #pop 2*|β| símbolos
                 print("contenido de la pila despues de eliminar:",pila)
                 pila.append(regla[0])   #push A
                 print("contenido de la pila despues de agregar A:",pila)
-                simbIra=buscarSimbolo(simbolos,pila[len(pila)-1]) 
+                simbIra=buscarSimbolo(simbolos,pila[len(pila)-1])
                 #s=Ir_a[j,A]
-                s=buscarAccion(variable,pila[len(pila)-2]+2,simbIra) 
+                s=buscarAccion(variable,pila[len(pila)-2]+2,simbIra)
                 #push s
                 pila.append(s)
                 print("contenido de la pila despues de agregar s:",pila)
@@ -230,9 +237,6 @@ def pilaCadena(pila):
     return str(k)
             
 def buscarSeEsperaba(estado,variable,simbolos):
-    print(estado)
-    print(variable)
-    print(simbolos)
     esperaba=[]
     for simbolo in simbolos:
         clave=(estado,simbolo[1])
@@ -241,7 +245,6 @@ def buscarSeEsperaba(estado,variable,simbolos):
             cont=contenido.cget("text")
             if(cont[0]=='d' or cont[0]=='r'):
                 esperaba.append(simbolo[0])
-    print(esperaba)
     return esperaba       
         
 def buscarAccion(variable,estado,posTira):  #esta es una funcion que busca la accion en la tabla de analisis sintactico
@@ -270,5 +273,5 @@ def limpiar(ventana):
 direccionArchivo2=""
 tiraTokens=""
 
-analisisSintactico()
+
     

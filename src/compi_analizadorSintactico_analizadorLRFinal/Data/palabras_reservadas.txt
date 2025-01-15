@@ -6,7 +6,6 @@ class
 const
 continue
 default
-double
 do
 else
 enum
@@ -20,19 +19,11 @@ import
 interface
 native
 new
-nextInt
-nextFloat
-nextDouble
-nextBoolean
-nextLine
 package
 private
 protected
 public
 return
-Scanner
-java
-util
 short
 static
 strictfp

@@ -1,11 +1,9 @@
-S F X E P T A V H R W L C D U G O Z Q B N Y I J K M
-id ; , class { } ( ) new nextint nextfloat nextdouble next nextboolean nextline print import java util scanner public private protected float int string char void double boolean nint nfloat [ ] = static varcadena literalcar true false system out . println printf + * / % if else igualigual mayorigual menorigual diferente and or masmas menosmenos masigual menosigual porigual entredosigual modigual resta > < for return while do break switch case default :
-S->N D F D
-N->import java . util . scanner ;
-N->λ
+S F X E P T A V H R W L C D U G O Z Q B
+id ; , class { } ( ) public private protected float int string char void double boolean nint nfloat [ ] = static varcadena literalcar true false system out . println printf + * / % if else igualigual mayorigual menorigual diferente and or masmas menosmenos masigual menosigual porigual entredosigual modigual resta menorque mayorque for return while do break switch case default :
+S->D F D
+F->λ
 D->class id { X X }
 D->λ
-F->λ
 F->E class id { X X }
 X->E U T id ( P ) { W }
 X->T id ( P ) { W }
@@ -17,9 +15,7 @@ E->private
 E->protected
 E->λ
 P->λ
-P->T R id M
-M->, P
-M->λ
+P->T R id
 R->[ nint ] R
 R->[ ]
 R->λ
@@ -32,25 +28,11 @@ T->string
 T->boolean
 A->T V
 A->λ
-W->E U T V
-V->id L ; W
-V->H id ; W
-V->H id = new T Y ; W
-V->H id = { I } ; W
-I->C
-I->C , I
-H->[ ] H
+V->id H
+H->[ nint ] H
 H->λ
-Y->[ nint ] Y
-Y->λ
-W->scanner id = new scanner ( system . id ) ; W
-W->G ( Y varcadena R ) ; W
-Y->id + Y
-Y->id , Y
-R->+ id R
-R->+ C R
-R->, C R
-R->, id R
+W->E U T id L ; W
+W->G ( varcadena ) ; W
 W->id L ; W
 W->if ( Q ) { W } W
 W->if ( Q ) { W } else { W } W
@@ -61,19 +43,16 @@ W->do { W } while ( Q ) ; W
 W->switch ( id ) { B } W
 B->case C : W B
 B->default : W
-B->λ
 W->break ; W
 W->λ
 W->return C ; W
 W->return id ; W
-W->return Q ; W
-W->return L ; W
 W->id masmas ; W
 W->id menosmenos ; W
-Q->id Q
-Q->Z id Q
-Q->Z C Q
-Q->C Q
+Q->id Z id
+Q->id Z C
+Q->C Z id
+Q->C Z C
 Q->λ
 Z->igualigual
 Z->diferente
@@ -81,24 +60,15 @@ Z->or
 Z->and
 Z->mayorigual
 Z->menorigual
-Z->>
-Z-><
-K->nextint
-K->nextfloat
-K->nextdouble
-K->nextboolean
-K->nextline
-L->= id . K ( )
+Z->mayorque
+Z->menorque
 L->, id L
 L->= C L
-L->C L
-L->id L
-L->masigual L
-L->menosigual L
-L->= id L
-L->O id L
-L->O C L
-L->= C L
+L->masigual C L
+L->menosigual C L
+L->= id O id L
+L->= id O C L
+L->= C O C L
 O->+
 O->*
 O->/
@@ -111,5 +81,4 @@ C->nfloat
 C->true
 C->false
 G->system . out . println
-G->system . out . print
-G->system . out . printf
+G->printf
