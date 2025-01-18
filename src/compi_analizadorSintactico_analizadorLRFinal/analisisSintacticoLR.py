@@ -4,13 +4,13 @@ from tkinter import ttk
 from lexico import *
 from TablaAnalisisSintactico import *
 from PrimerosYSiguientes import mainPyS
-#Aun no tiene la modificacion de la regla de lambda
+
 def analisisSintactico():
     VentanaPrincipal =Toplevel()
     VentanaPrincipal.title("Analisis sintactico LR")
     VentanaPrincipal.state("zoomed")
     VentanaPrincipal.config(background="#363062")
-    VentanaPrincipal.iconbitmap("Compiler.ico")
+    VentanaPrincipal.iconbitmap("Sintactico.ico")
     encabezado(VentanaPrincipal)
 
 def encabezado(VentanaPrincipal):
@@ -49,7 +49,7 @@ def abrirArchivo(Ventana):
     global direccionArchivo2
     Ventana.grab_set()
     username=getpass.getuser()
-    ruta_proyecto = r"C:\Users\{username}\Documents\ProyectoCompiladores"
+    ruta_proyecto = r"C:\Users\{username}\Documents\CompiladorEq5"
     direccionArchivo2=filedialog.askopenfilename(initialdir=ruta_proyecto,title="Abrir Archivo",filetypes=(("texto","*.txt"),))
     print(direccionArchivo2)
     cargarGramatica(Ventana,direccionArchivo2)
@@ -58,7 +58,7 @@ def abrirArchivo1(Ventana):
     global tiraTokens
     Ventana.grab_set()
     username=getpass.getuser()
-    ruta_proyecto = r"C:\Users\{username}\Documents\ProyectoCompiladores"
+    ruta_proyecto = r"C:\Users\{username}\Documents\CompiladorEq5"
     direccionArchivo=filedialog.askopenfilename(initialdir=ruta_proyecto,title="Abrir Archivo",filetypes=(("texto","*.txt"),))
     archivo_cargado=open(direccionArchivo,"r",encoding="utf-8")
     tiraTokens=archivo_cargado.readline()

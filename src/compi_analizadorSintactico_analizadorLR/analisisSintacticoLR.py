@@ -53,7 +53,7 @@ def abrirArchivo(Ventana):
     global direccionArchivo2
     Ventana.grab_set()
     username=getpass.getuser()
-    ruta_proyecto = r"../../gramaticas_sintactico"
+    ruta_proyecto = r"../../pruebas_sintactico/gramaticas_sintactico"
     direccionArchivo2=filedialog.askopenfilename(initialdir=ruta_proyecto,title="Abrir Archivo",filetypes=(("texto","*.txt"),))
     print(direccionArchivo2)
     cargarGramatica(Ventana,direccionArchivo2)
@@ -62,7 +62,7 @@ def abrirArchivo1(Ventana):
     global tiraTokens
     Ventana.grab_set()
     username=getpass.getuser()
-    ruta_proyecto = r"../../programas_AS/"
+    ruta_proyecto = r"../../pruebas_sintactico/programas_AS/"
     direccionArchivo=filedialog.askopenfilename(initialdir=ruta_proyecto,title="Abrir Archivo",filetypes=(("texto","*.txt"),))
     archivo_cargado=open(direccionArchivo,"r",encoding="utf-8")
     tiraTokens=archivo_cargado.readline()

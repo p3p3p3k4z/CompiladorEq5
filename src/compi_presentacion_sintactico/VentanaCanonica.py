@@ -10,7 +10,7 @@ from coleccion_canonica import main
 
 def cargar_archivo(ruta_entry):
     # Ruta predefinida para abrir el cuadro de diálogo de archivo
-    ruta_inicial = "../../gramaticas_canonicas"
+    ruta_inicial = "../../pruebas_sintactico/gramaticas_canonicas"
     
     # Si la ruta inicial no existe, usa la ruta actual
     if not os.path.exists(ruta_inicial):
@@ -38,7 +38,7 @@ def ejecutar_main(ruta_entry, texto_salida):
 def ventana_coleccion():
     # ventana principal
     ctk.set_appearance_mode("Dark")  # Puedes cambiar los colores para futuras entregas
-    ctk.set_default_color_theme("blue")
+    ctk.set_default_color_theme("green")
 
     ventana = ctk.CTk()
     ventana.title("Colección Canónica")

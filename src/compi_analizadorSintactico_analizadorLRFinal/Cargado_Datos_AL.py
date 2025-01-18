@@ -1,42 +1,56 @@
-# Función para cargar los datos de la carpeta Data que 
-def cargar_palabras_reservadas(lineas):
-    for linea in lineas:
-        lista_pReservadas.append(linea.strip('\n'))
-        
-def cargar_simbolos(lineas):
-    for linea in lineas:
-        lista_simbolos.append(linea.strip('\n'))
+import os
+import sys
 
-def cargar_tipo_datos(lineas):
-    for linea in lineas:
-        lista_tipo_datos.append(linea.strip('\n'))
-    
-    
+base_path = os.path.abspath(os.path.dirname(__file__))
 
-# Leer el archivo de entrada
-archivo_cargado = 'Data/palabras_reservadas.txt'
-with open(archivo_cargado, 'r') as file:
-    lineas = file.readlines()
-    
-lista_pReservadas = []
-cargar_palabras_reservadas(lineas)
+def cargar_datos(lineas):
+    """Processes lines from a file and strips newline characters."""
+    return [linea.strip('\n') for linea in lineas]
 
-archivo_cargado = 'Data/simbolos.txt'
-with open(archivo_cargado, 'r') as file:
-    lineas = file.readlines()
-    
-lista_simbolos = []
-cargar_simbolos(lineas)
+def cargar_archivo(ruta_relativa):
+    """Loads a file and returns its lines."""
+    archivo_cargado = os.path.join(base_path, ruta_relativa)
+    if not os.path.exists(archivo_cargado):
+        print(f"Error: File not found: {archivo_cargado}")
+        sys.exit(1)
+    try:
+        with open(archivo_cargado, 'r') as file:
+            return file.readlines()
+    except IOError as e:
+        print(f"Error reading file {archivo_cargado}: {e}")
+        sys.exit(1)
 
-archivo_cargado = 'Data/tipos_dato.txt'
-with open(archivo_cargado, 'r') as file:
-    lineas = file.readlines()
-    
-lista_tipo_datos = []
-cargar_tipo_datos(lineas)
+# Load data from files
+lineas_pReservadas = cargar_archivo('../../pruebas_sintactico/necesario/palabras_reservadas.txt')
+lineas_simbolos = cargar_archivo('../../pruebas_sintactico/necesario/simbolos.txt')
+lineas_tipos_dato = cargar_archivo('../../pruebas_sintactico/necesario/tipos_dato.txt')
 
-#unimos la lista de tipos de datos al de palabras reservadas
-lista_pReservadas = lista_pReservadas + lista_tipo_datos
+# Process data
+lista_pReservadas = cargar_datos(lineas_pReservadas)
+lista_simbolos = cargar_datos(lineas_simbolos)
+lista_tipo_datos = cargar_datos(lineas_tipos_dato)
 
-#for pReservada in lista_pReservadas:
-#    print(pReservada)
+# Combine lists
+lista_pReservadas += lista_tipo_datos
+
+# Debugging
+# Debug the base path
+print(f"Base path: {base_path}")
+
+# Attempt to construct and load the file
+archivo_cargado = os.path.join(base_path, '..', '..', 'pruebas_sintactico/necesario', 'palabras_reservadas.txt')
+print(f"Attempting to load file from: {archivo_cargado}")
+
+# Check if file exists
+if not os.path.exists(archivo_cargado):
+    print(f"Error: File not found: {archivo_cargado}")
+    sys.exit(1)
+
+# Read the file
+try:
+    with open(archivo_cargado, 'r') as file:
+        lineas = file.readlines()
+except IOError as e:
+    print(f"Error reading file {archivo_cargado}: {e}")
+    sys.exit(1)
+

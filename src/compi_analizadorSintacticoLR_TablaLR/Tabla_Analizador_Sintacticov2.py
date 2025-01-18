@@ -332,7 +332,7 @@ def CargadoGramatica2(direccionArchivo):
     
     return reglasProduccion, listaNoTerminales, listaTerminales
 
-ruta=""
+ruta="../../pruebas_sintactico/gramaticas_tablaLR"
 direccionArchivo=""
 
 #InterfazTablaAS()

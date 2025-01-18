@@ -18,7 +18,7 @@ lista_simbolos = []
 lista_tipo_datos = []
 
 # Construir rutas absolutas para los archivos
-ruta_data = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Data')
+ruta_data = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'necesario')
 ruta_palabras_reservadas = os.path.join(ruta_data, 'palabras_reservadas.txt')
 ruta_simbolos = os.path.join(ruta_data, 'simbolos.txt')
 ruta_tipos_dato = os.path.join(ruta_data, 'tipos_dato.txt')

@@ -9,9 +9,9 @@ def InterfazTablaAS():
     VentanaPrincipal =Toplevel()
     VentanaPrincipal.title("Algoritmo de la colección canónica")
     try:
-        VentanaPrincipal.attributes("-zoomed", True)
+        VentanaPrincipal.state("zoomed")
     except:
-       VentanaPrincipal.geometry(f"{lexWindow.winfo_screenwidth()}x{lexWindow.winfo_screenheight()}+0+0")
+        VentanaPrincipal.attributes('-zoomed', True) 
     VentanaPrincipal.config(background="#F9C0AB")
     font2=("Times New Roman",20)
     archivoLabel=Label(VentanaPrincipal,text="Seleccionar Archivo:",font=font1,width=20,background="#A8CD89",foreground="white")

@@ -10,7 +10,7 @@ import os
 import sys
 
 base_path = os.path.abspath(os.path.dirname(__file__))
-gramatica_path = os.path.join(base_path, '..', '..', 'Pruebas_Archivos_Entrada_JAVA', 'entradaLR.txt')
+gramatica_path = os.path.join(base_path, '..', '..', 'pruebas_sintactico/programitas_java', 'entradaLR.txt')
 
 def analizadorSintacticoJava():
     VentanaPrincipal =Toplevel()
@@ -26,7 +26,7 @@ def analizadorSintacticoJava():
 def encabezado(VentanaPrincipal):
     font1=("Times New Roman",14)
     font2=("Times New Roman",20)
-    archivoLabel=Label(VentanaPrincipal,text="Seleccionar Archivo:",font=font1,width=20,background="#FF9D23",foreground="white")
+    archivoLabel=Label(VentanaPrincipal,text="Seleccionar Archivo:",font=font1,width=20,background="#3CB35A",foreground="white")
     archivoLabel.place(x=60,y=30)
     archivoButton=Button(VentanaPrincipal,text="Cargar Gramatica",foreground="white",width=20,command=lambda:abrirArchivo(VentanaPrincipal),bg="#FB9EC6",font=font1)
     archivoButton.place(x=300,y=20)
@@ -60,8 +60,8 @@ def abrirArchivo(Ventana):
     global direccionArchivo2
     Ventana.grab_set()
     username=getpass.getuser()
-    ruta_proyecto = r"C:\Users\{username}\Documents\ProyectoCompiladores"
-    direccionArchivo2= "Pruebas_Archivos_Entrada_JAVA/entradaLR.txt"
+    ruta_proyecto = r"C:\Users\{username}\Documents\CompiladorEq5"
+    direccionArchivo2= "programitas_java/entradaLR.txt"
     cargarGramatica(Ventana,direccionArchivo2)
 
 def abrirArchivo1(Ventana):
@@ -185,19 +185,19 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana):
     accion=[]
     pila.append(0)
     font1=("Times New Roman",14)
-    labelTextPila=Label(tabla,text="Pila",background="#FF9D23",width=20,font=font1,borderwidth=2,relief="solid")
+    labelTextPila=Label(tabla,text="Pila",background="#3CB35A",width=40,font=font1,borderwidth=2,relief="solid")
     labelTextPila.grid(row=contadorFila,column=0)
-    labelTextTira=Label(tabla,text="Entrada",width=30,background="#FF9D23",font=font1,borderwidth=2,relief="solid")
+    labelTextTira=Label(tabla,text="Entrada",width=60,background="#3CB35A",font=font1,borderwidth=2,relief="solid")
     labelTextTira.grid(row=contadorFila,column=1)
-    labelTextSalida=Label(tabla,text="Salida",width=40,background="#FF9D23",font=font1,borderwidth=2,relief="solid")
+    labelTextSalida=Label(tabla,text="Salida",width=40,background="#3CB35A",font=font1,borderwidth=2,relief="solid")
     labelTextSalida.grid(row=contadorFila,column=2,columnspan=2)
     contadorFila+=1
     while((len(tira)>0) & (accion!='Aceptacion') & (accion!='')):
         a=tira[0]
         sacarTira=tira[0]
-        labelPila=Label(tabla,text=pilaCadena(pila),width=20,font=font1,borderwidth=2,relief="solid")
+        labelPila=Label(tabla,text=pilaCadena(pila),width=40,font=font1,borderwidth=2,relief="solid")
         labelPila.grid(row=contadorFila,column=0) 
-        labelTira=Label(tabla,text=pilaCadena(tira),width=30,font=font1,borderwidth=2,relief="solid")
+        labelTira=Label(tabla,text=pilaCadena(tira),width=60,font=font1,borderwidth=2,relief="solid")
         labelTira.grid(row=contadorFila,column=1)
         simboloTira=buscarSimbolo(simbolos,sacarTira)
         print("simbolo en la tira:",simboloTira)

@@ -8,10 +8,6 @@ lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_
 sys.path.append(lib_path)
 lib_path2 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_presentacion_sintactico'))
 sys.path.append(lib_path2)
-lib_path3 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Coleccion_canonica'))
-sys.path.append(lib_path3)
-lib_path4 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_analizadorSintacticoLR_TablaLR'))
-sys.path.append(lib_path4)
 lib_path5 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_analizadorSintactico_analizadorLR'))
 sys.path.append(lib_path5)
 lib_path6 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_analizadorSintactico_analizadorLRFinal'))
@@ -26,17 +22,16 @@ AUDIO_PATH = os.path.join(base_path, '..', '..', 'musica', 'main_theme.ogg')
 from VentanaThompson import Conjuntos
 from VentanaConjuntos import Conjuntos_afn
 from VentanaAlexicov2Custom import VentanaAlexicoCustom
-from VentanaPrimerosSiguientes import ventanaPYS_Aux 
-#from VentanaPYS_YamilJose import *
+
+from VentanaPrimerosSiguientesAri import ventanaPYS_Aux 
 from VentanaCanonica import ventana_coleccion
-#from Interfaz import *
-from Tabla_Analizador_Sintacticov2 import InterfazTablaAS
+from VentanaTablaAnalizadorSintactico import ventanaTablaSintactico
 from analisisSintacticoLR import analisisSintactico
 from Analizador_Sintactico import analizadorSintacticoJava
 
 # Configuración global de customtkinter
 set_appearance_mode("dark") 
-set_default_color_theme("green")  # Tema de colores
+set_default_color_theme("green")
 
 # Inicializar pygame para audio
 pygame.mixer.init()
@@ -212,7 +207,7 @@ def abrirMenuSintactico():
     CTkButton(
         menu_sintactico, 
         text="Tabla de análisis sintáctico LR", 
-        command=lambda: InterfazTablaAS(), 
+        command=lambda: ventanaTablaSintactico(), 
         corner_radius=10,
         font=("Times New Roman", 12)
     ).pack(pady=10)
