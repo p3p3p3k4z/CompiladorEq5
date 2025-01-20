@@ -38,7 +38,6 @@ pip install customtkinther pygame
 ### Tabla de Analisis Sintactico
 - Ya se me olvido que se tenia que hacer ;-;
 
-
 ### Analizador sintactico
 - cambio de interfaz, custom de preferencia
 - checar la asignacion para interfaz
@@ -46,4 +45,6 @@ pip install customtkinther pygame
 
 ### Analizador sintactico Final
 - cambio de interfaz a la de la asignacion
-  
+
+
+  En resumen miren la asinacion y que tenan lo mismo. que se pueda previsualizar los arcivos ;-;. Cosas asi
