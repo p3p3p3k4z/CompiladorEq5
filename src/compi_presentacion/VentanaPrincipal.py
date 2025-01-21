@@ -8,6 +8,8 @@ lib_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_
 sys.path.append(lib_path)
 lib_path2 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_presentacion_sintactico'))
 sys.path.append(lib_path2)
+lib_path3 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_Analizador_Semantico'))
+sys.path.append(lib_path3)
 lib_path5 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_analizadorSintactico_analizadorLR'))
 sys.path.append(lib_path5)
 lib_path6 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_analizadorSintactico_analizadorLRFinal'))
@@ -28,6 +30,7 @@ from VentanaCanonica import ventana_coleccion
 from VentanaTablaAnalizadorSintactico import ventanaTablaSintactico
 from analisisSintacticoLR import analisisSintactico
 from Analizador_Sintactico import analizadorSintacticoJava
+from analisis_semantico import analizadorSemantico
 
 # Configuración global de customtkinter
 set_appearance_mode("dark") 
@@ -93,9 +96,10 @@ def ventanaPrincipal():
     # Botón deshabilitado para análisis semántico
     btn_semantico = CTkButton(
         menu_frame, 
-        text="Análisis Semántico (Deshabilitado)", 
-        state="disabled", 
-        corner_radius=10, 
+        text="Análisis Semántico", 
+       # state="disabled", 
+        corner_radius=10,
+        command=lambda: analizadorSemantico(),
         font=("Times New Roman", 14),
         height=50,
         width=250

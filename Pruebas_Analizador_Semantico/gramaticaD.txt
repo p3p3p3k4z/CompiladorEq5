@@ -1,0 +1,7 @@
+D L T
+id ; , float int
+D->T id L ;->{D.trad:="var "||id.val||L.trad||":"||T.trad||";"}
+L->, id L->{L.trad:=","||id.val||L.trad}
+L->λ->{L.trad:=""}
+T->float->{T.trad:="real"}
+T->int->{T.trad:="integer"}

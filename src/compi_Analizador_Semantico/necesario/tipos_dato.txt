@@ -1,0 +1,10 @@
+void
+double
+float
+boolean
+byte
+long
+int
+char
+String
+string

@@ -1,0 +1,8 @@
+E T F
++ * ( ) nint
+E->E + T->{E.v:=E.v+T.v}
+E->T->{E.v:=T.v}
+T->T * F->{T.v:=T.v*F.v}
+T->F->{T.v:=F.v}
+F->( E )->{F.v:=E.v}
+F->nint->{F.v:=nint.val}

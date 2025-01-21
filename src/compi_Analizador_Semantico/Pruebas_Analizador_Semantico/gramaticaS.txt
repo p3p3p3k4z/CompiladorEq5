@@ -1,0 +1,9 @@
+S V H T
+; id [ nint ] int char float
+S->T V ;->{S.trad:="var "||V.trad||T.trad||";"}
+V->id H->{if H.trad!="" V.temp:="array["||H.trad else V.temp:=H.trad V.trad:=id.val||":"||V.temp}
+H->[ nint ] H->{if H.trad=="" H.trad:="0.."||nint.val-1||"]"||" of " else H.trad:="0.."||nint.val-1||","||H.trad}
+H->λ->{H.trad:=""}
+T->int->{T.trad:="integer"}
+T->char->{T.trad:="char"}
+T->float->{T.trad:="real"}
