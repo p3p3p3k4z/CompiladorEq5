@@ -62,7 +62,7 @@ def encabezado(VentanaPrincipal):
 def cargarGramatica(Ventana,direccionArchivo):
     global Gramatica
     frameGramatica=Frame(Ventana,width=300,height=600)
-    frameGramatica.place(x=60,y=150)
+    frameGramatica.place(x=10,y=150)
     archivo=open(direccionArchivo,"r",encoding="utf-8")
     Gramatica=[]
     linea=archivo.readline()
@@ -73,7 +73,7 @@ def cargarGramatica(Ventana,direccionArchivo):
         grama=linea
         grama=grama.replace("\n","")
         Gramatica.append(grama) #aqui se guarda la gramatica sin el salto de linea
-        mostrarRegla=Label(frameGramatica,text=str(linea),font=("Times New Roman",14),width=45)
+        mostrarRegla=Label(frameGramatica,text=str(linea),font=("Times New Roman",14),width=30)
         mostrarRegla.grid(row=contador,column=0)
         contador+=1
 
@@ -133,13 +133,13 @@ def MostrarArchivo(ventana, direccion_archivo):
     try:
         # Crear un Frame para mostrar el contenido del archivo
         frame_contenido = Frame(ventana, width=300, height=600)
-        frame_contenido.place(x=50, y=600)
+        frame_contenido.place(x=20, y=600)
         
         with open(direccion_archivo, "r", encoding="utf-8") as archivo:
             # Leer todas las líneas del archivo
             for contador, linea in enumerate(archivo):
                 # Mostrar cada línea en el Frame
-                mostrar_linea = Label(frame_contenido, text=linea.strip(), font=("Times New Roman", 14), anchor="w", width=40)
+                mostrar_linea = Label(frame_contenido, text=linea.strip(), font=("Times New Roman", 14), anchor="w", width=20)
                 mostrar_linea.grid(row=contador, column=0, sticky="w")
     
     except Exception as e:
@@ -157,10 +157,10 @@ def imprimirResultados(Ventana):
     except:
         ventanaResultados.attributes('-zoomed', True) 
     ventanaResultados.grab_set()
-    frameResultados=Frame(ventanaResultados,width=300,height=600)
-    frameResultados.place(x=400,y=100)
+    frameResultados=Frame(ventanaResultados,width=200,height=500)
+    frameResultados.place(x=200,y=100)
     ventana2=Toplevel()
-    frame2=Frame(ventana2,width=400,height=600)
+    frame2=Frame(ventana2,width=200,height=500)
     
     datos,reglas=ImprimirResultados2(ventana2,frame2,direccionArchivo2)
     ventana2.destroy()
@@ -200,11 +200,11 @@ def imprimirResultados(Ventana):
 
 def TablaLr(variable,simbolos,tira,arreGramatica,Ventana,arreAcciones):
     Ventana.grab_set()
-    tabla=Frame(Ventana,width=1200,height=600)
-    tabla.place(x=500,y=150)
+    tabla=Frame(Ventana,width=920,height=500)
+    tabla.place(x=350,y=150)
     tabla.config(background="#F6C794")
-    canvas=Canvas(Ventana,width=1200,height=600)
-    canvas.place(x=500,y=150)
+    canvas=Canvas(Ventana,width=920,height=500)
+    canvas.place(x=350,y=150)
 
     def on_arrow_key(event):
             if event.keysym == "Left":

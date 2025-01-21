@@ -1,0 +1,84 @@
+S F X E P T A V H R W L C D U G O Z Q B
+id ; , class { } ( ) public private protected float int string char void double boolean nint nfloat [ ] = static varcadena literalcar true false system out . println printf + * / % if else igualigual mayorigual menorigual diferente and or masmas menosmenos masigual menosigual porigual entredosigual modigual resta menorque mayorque for return while do break switch case default :
+S->D F D
+F->λ
+D->class id { X X }
+D->λ
+F->E class id { X X }
+X->E U T id ( P ) { W }
+X->T id ( P ) { W }
+X->λ
+U->static
+U->λ
+E->public
+E->private
+E->protected
+E->λ
+P->λ
+P->T R id
+R->[ nint ] R
+R->[ ]
+R->λ
+T->float
+T->int
+T->void
+T->double
+T->char
+T->string
+T->boolean
+A->T V
+A->λ
+V->id H
+H->[ nint ] H
+H->λ
+W->E U T id L ; W
+W->G ( varcadena ) ; W
+W->id L ; W
+W->if ( Q ) { W } W
+W->if ( Q ) { W } else { W } W
+W->for ( T id = C ; Q ; id masmas ) { W } W
+W->for ( T id = C ; Q ; id menosmenos ) { W } W
+W->while ( Q ) { W } W
+W->do { W } while ( Q ) ; W
+W->switch ( id ) { B } W
+B->case C : W B
+B->default : W
+W->break ; W
+W->λ
+W->return C ; W
+W->return id ; W
+W->id masmas ; W
+W->id menosmenos ; W
+Q->id Z id
+Q->id Z C
+Q->C Z id
+Q->C Z C
+Q->λ
+Z->igualigual
+Z->diferente
+Z->or
+Z->and
+Z->mayorigual
+Z->menorigual
+Z->mayorque
+Z->menorque
+L->, id L
+L->= C L
+L->masigual C L
+L->menosigual C L
+L->= id O id L
+L->= id O C L
+L->= C O C L
+O->+
+O->*
+O->/
+O->%
+L->λ
+C->nint
+C->varcadena
+C->literalcar
+C->nfloat
+C->true
+C->false
+G->system . out . println
+G->printf

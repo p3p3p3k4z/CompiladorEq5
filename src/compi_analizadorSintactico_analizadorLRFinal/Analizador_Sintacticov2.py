@@ -2,34 +2,93 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
 from lexico import *
-from TablaAnalisisSintactico import *
+from Analizador_Lexico import *
+from TablaAnalisisSintacticoRef import *
 from PrimerosYSiguientes import mainPyS
 
-def analisisSintactico():
+import os
+import sys
+
+base_path = os.path.abspath(os.path.dirname(__file__))
+gramatica_path = os.path.join(base_path, '..', '..', 'pruebas_sintactico/programitas_java', 'entradaLR.txt')
+
+def analizadorSintacticoJava():
     VentanaPrincipal =Toplevel()
-    VentanaPrincipal.title("Analisis sintactico LR")
-    VentanaPrincipal.state("zoomed")
-    VentanaPrincipal.config(background="#363062")
-    VentanaPrincipal.iconbitmap("Sintactico.ico")
+    VentanaPrincipal.title("Analizador sintáctico")
+    try:
+        VentanaPrincipal.state("zoomed")
+    except:
+        VentanaPrincipal.attributes('-zoomed', True) 
+    VentanaPrincipal.config(background="#181818")
     encabezado(VentanaPrincipal)
+    VentanaPrincipal.mainloop()
 
 def encabezado(VentanaPrincipal):
     font1=("Times New Roman",14)
     font2=("Times New Roman",20)
-    archivoLabel=Label(VentanaPrincipal,text="Seleccionar Archivo:",font=font1,width=20,background="#363062",foreground="white")
+    
+    archivoLabel=Label(
+        VentanaPrincipal,
+        text="Seleccionar programa fuente:",
+        font=font1,
+        width=20,
+        background="#282828",
+        foreground="#FFFFFF")
     archivoLabel.place(x=60,y=30)
-    archivoButton=Button(VentanaPrincipal,text="Abrir archivo",width=20,command=lambda:abrirArchivo(VentanaPrincipal),bg="#F99417",font=font1)
+    
+    archivoRutaTexto = Text(
+        VentanaPrincipal,
+        height=1,  # Altura del recuadro en líneas
+        width=90,  # Ancho del recuadro en caracteres
+        font=font1,
+        background="#282828",
+        foreground="#FFFFFF",
+        state="disabled",  # Inicialmente deshabilitado
+        wrap=NONE  # Evita que el texto haga saltos de línea automáticos
+    )
+    archivoRutaTexto.place(x=530, y=25)
+    
+    archivoButton=Button(
+         VentanaPrincipal,text="Abrir",
+        foreground="#FFFFFF",
+        width=20,
+        bg="#007ACC",
+        font=font1,
+        command=lambda:abrirArchivo1(VentanaPrincipal, archivoRutaTexto),
+        )
+    
     archivoButton.place(x=300,y=20)
-    tokenButton=Button(VentanaPrincipal,text="Seleccionar tira de tokens",width=20,bg="#F99417",font=font1,command=lambda:abrirArchivo1(VentanaPrincipal))
+    tokenButton=Button(
+       VentanaPrincipal,
+        text="Cargar Gramatica",
+        foreground="#FFFFFF",
+        width=20,
+        command=lambda:abrirArchivo(VentanaPrincipal),
+        bg="#007ACC",
+        font=font1,
+        
+        )
+
+    
     tokenButton.place(x=300,y=100)
-    ImprimirResultad0s=Button(VentanaPrincipal,text="Imprimir Resultados",width=20,bg="#F99417",font=font1,command=lambda:imprimirResultados(VentanaPrincipal))
-    ImprimirResultad0s.place(x=500,y=60)
-    limpiarButton=Button(VentanaPrincipal,text="Limpiar",width=20,bg="#F99417",font=font1,command=lambda:limpiar(VentanaPrincipal))
-    limpiarButton.place(x=700,y=60)
+    ImprimirResultad0s=Button(
+        VentanaPrincipal,text="Analizar",
+        foreground="#FFFFFF",width=20,bg="#007ACC",
+        font=font1,
+        command=lambda:imprimirResultados(VentanaPrincipal),
+        
+        )
+    ImprimirResultad0s.place(x=550,y=100)
+    limpiarButton=Button(
+        VentanaPrincipal,text="Limpiar",
+        foreground="#FFFFFF",width=20,bg="#007ACC",
+        font=font1,command=lambda:limpiar(VentanaPrincipal),
+        )
+    limpiarButton.place(x=800,y=100)
 
 def cargarGramatica(Ventana,direccionArchivo):
     global Gramatica
-    frameGramatica=Frame(Ventana,width=300,height=600)
+    frameGramatica=Frame(Ventana,width=300,height=600,bg="#1E1E1E")
     frameGramatica.place(x=60,y=100)
     archivo=open(direccionArchivo,"r",encoding="utf-8")
     Gramatica=[]
@@ -41,7 +100,12 @@ def cargarGramatica(Ventana,direccionArchivo):
         grama=linea
         grama=grama.replace("\n","")
         Gramatica.append(grama) #aqui se guarda la gramatica sin el salto de linea
-        mostrarRegla=Label(frameGramatica,text=str(linea),font=("Times New Roman",14),width=20)
+        mostrarRegla=Label(frameGramatica,text=str(linea),
+                           font=("Times New Roman",14),
+                            width=20, 
+                            bg="#252526",  # Fondo oscuro
+                            fg="#D4D4D4",  # Texto gris claro
+                            )
         mostrarRegla.grid(row=contador,column=0)
         contador+=1
 
@@ -50,20 +114,46 @@ def abrirArchivo(Ventana):
     Ventana.grab_set()
     username=getpass.getuser()
     ruta_proyecto = r"C:\Users\{username}\Documents\CompiladorEq5"
-    direccionArchivo2=filedialog.askopenfilename(initialdir=ruta_proyecto,title="Abrir Archivo",filetypes=(("texto","*.txt"),))
-    print(direccionArchivo2)
+    direccionArchivo2= "programitas_java/entradaLR.txt"
     cargarGramatica(Ventana,direccionArchivo2)
 
-def abrirArchivo1(Ventana):
+def abrirArchivo1(Ventana, archivoRutaTexto): 
     global tiraTokens
     Ventana.grab_set()
-    username=getpass.getuser()
-    ruta_proyecto = r"C:\Users\{username}\Documents\CompiladorEq5"
-    direccionArchivo=filedialog.askopenfilename(initialdir=ruta_proyecto,title="Abrir Archivo",filetypes=(("texto","*.txt"),))
-    archivo_cargado=open(direccionArchivo,"r",encoding="utf-8")
-    tiraTokens=archivo_cargado.readline()
-    print(tiraTokens)
+    
+    # Definir la ruta inicial del proyecto (asegúrate de que 'gramatica_path' esté definida)
+    ruta_proyecto = gramatica_path  
+    direccionArchivo = filedialog.askopenfilename(
+        initialdir=ruta_proyecto,
+        title="Abrir Archivo",
+        filetypes=(("Archivos Java", "*.java"), ("Archivos de texto", "*.txt"), ("Todos los archivos", "*.*"))
+    )
+    
+    if direccionArchivo:
+        # Mostrar solo la ruta del archivo en el cuadro de texto
+        archivoRutaTexto.config(state="normal")  # Habilitar edición temporalmente
+        archivoRutaTexto.delete(1.0, END)  # Limpiar cualquier texto previo
+        archivoRutaTexto.insert(END, direccionArchivo)  # Insertar la ruta del archivo seleccionado
+        archivoRutaTexto.config(state="disabled")  # Volver a deshabilitar
 
+        # Procesar el archivo seleccionado
+        tiraTokens = ObtenerTiraTokensExterna(direccionArchivo)
+
+        # Sustituir operadores y símbolos compuestos por dos caracteres
+        reemplazos = {
+            "<": "menorque", ">": "mayorque", "==": "igualigual",
+            ">=": "mayorigual", "<=": "menorigual", "!=": "diferente",
+            "&&": "and", "||": "or", "++": "masmas", "--": "menosmenos",
+            "+=": "masigual", "-=": "menosigual", "*=": "porigual",
+            "/=": "entredosigual", "%=": "modigual", "-": "resta",
+            "String": "string"
+        }
+
+        for key, value in reemplazos.items():
+            tiraTokens = tiraTokens.replace(key, value)
+
+        # Opcional: Puedes imprimir la tira de tokens para depuración
+        print("Tira de tokens procesada:", tiraTokens)
 
 def imprimirResultados(Ventana):
     global tiraTokens
@@ -71,17 +161,21 @@ def imprimirResultados(Ventana):
     global Gramatica
     ventanaResultados=Toplevel()
     ventanaResultados.title("Resultados")
-    ventanaResultados.state("zoomed")
+    try:
+        ventanaResultados.state("zoomed")
+    except:
+        ventanaResultados.attributes('-zoomed', True) 
     ventanaResultados.grab_set()
-    frameResultados=Frame(ventanaResultados,width=300,height=600)
+    frameResultados=Frame(ventanaResultados,width=600,height=600)
     frameResultados.place(x=60,y=100)
     ventana2=Toplevel()
     frame2=Frame(ventana2,width=300,height=600)
+    
     #Esto es lo que hay que arreglar
     datos,reglas=ImprimirResultados2(ventana2,frame2,direccionArchivo2)
     ventana2.destroy()
     setDireccionArchivo(direccionArchivo2,reglas)
-    variable,simbolos,estados=ImprimirTablaAS(ventanaResultados,frameResultados)#variable es un diccionario con clave el numero de estado y la columna y contenido un label con el contenido de la tabla
+    variable,simbolos,estados=ImprimirTablaASZ(ventanaResultados,frameResultados)#variable es un diccionario con clave el numero de estado y la columna y contenido un label con el contenido de la tabla
     for var in variable:
         contenido=variable[var]
         cont=contenido.cget("text")
@@ -109,31 +203,64 @@ def imprimirResultados(Ventana):
     print("funcion")
     TablaLr(variable,arreglosimbolos,tira,arreGramatica,Ventana)
     ventanaResultados.grab_release()
-
+    
     
 
 def TablaLr(variable,simbolos,tira,arreGramatica,Ventana):
     Ventana.grab_set()
     tabla=Frame(Ventana,width=900,height=600)
     tabla.place(x=300,y=150)
+    tabla.config(background="#F6C794")
+    canvas=Canvas(Ventana,width=1100,height=900)
+    canvas.place(x=300,y=150)
+
+    def on_arrow_key(event):
+            if event.keysym == "Left":
+                canvas.xview_scroll(-1, "units")
+            elif event.keysym == "Right":
+                canvas.xview_scroll(1, "units")
+            #canvas.config(scrollregion=canvas.bbox("all"))    
+
+    def on_arrow_key_v(event):
+         if event.keysym == "Up":
+             canvas.yview_scroll(-1, "units")
+         elif event.keysym == "Down":
+             canvas.yview_scroll(1, "units")
+         #canvas.config(scrollregion=canvas.bbox("all"))
+    
+    scrollbar=ttk.Scrollbar(canvas, orient="vertical", command=canvas.yview)
+    scrollbar.set(0.0, 1.0)
+    scrollbar.place(x=5, y=50, height=300)
+
+    horizontal_scrollbar = ttk.Scrollbar(canvas, orient="horizontal", command=canvas.xview)
+    horizontal_scrollbar.set(0.0,1.0)
+    horizontal_scrollbar.place(x=0,y=0,width=300)
+
+    tabla=Frame(canvas,width=1470,height=300)
+    canvas.create_window((100, 50), window=tabla, anchor=NW)
+    canvas.configure(yscrollcommand=scrollbar.set,xscrollcommand=horizontal_scrollbar.set)
+    canvas.bind_all("<KeyPress-Left>", on_arrow_key)
+    canvas.bind_all("<KeyPress-Right>", on_arrow_key)
+    canvas.bind_all("<KeyPress-Up>", on_arrow_key_v)
+    canvas.bind_all("<KeyPress-Down>", on_arrow_key_v)
     contadorFila=0
     pila=[]
     accion=[]
     pila.append(0)
     font1=("Times New Roman",14)
-    labelTextPila=Label(tabla,text="Pila",width=20,font=font1,borderwidth=2,relief="solid")
+    labelTextPila=Label(tabla,text="Pila",background="#3CB35A",width=40,font=font1,borderwidth=2,relief="solid")
     labelTextPila.grid(row=contadorFila,column=0)
-    labelTextTira=Label(tabla,text="Entrada",width=30,font=font1,borderwidth=2,relief="solid")
+    labelTextTira=Label(tabla,text="Entrada",width=60,background="#3CB35A",font=font1,borderwidth=2,relief="solid")
     labelTextTira.grid(row=contadorFila,column=1)
-    labelTextSalida=Label(tabla,text="Salida",width=40,font=font1,borderwidth=2,relief="solid")
+    labelTextSalida=Label(tabla,text="Salida",width=40,background="#3CB35A",font=font1,borderwidth=2,relief="solid")
     labelTextSalida.grid(row=contadorFila,column=2,columnspan=2)
     contadorFila+=1
     while((len(tira)>0) & (accion!='Aceptacion') & (accion!='')):
         a=tira[0]
         sacarTira=tira[0]
-        labelPila=Label(tabla,text=pilaCadena(pila),width=20,font=font1,borderwidth=2,relief="solid")
+        labelPila=Label(tabla,text=pilaCadena(pila),width=40,font=font1,borderwidth=2,relief="solid")
         labelPila.grid(row=contadorFila,column=0) 
-        labelTira=Label(tabla,text=pilaCadena(tira),width=30,font=font1,borderwidth=2,relief="solid")
+        labelTira=Label(tabla,text=pilaCadena(tira),width=60,font=font1,borderwidth=2,relief="solid")
         labelTira.grid(row=contadorFila,column=1)
         simboloTira=buscarSimbolo(simbolos,sacarTira)
         print("simbolo en la tira:",simboloTira)
@@ -193,8 +320,11 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana):
                 print("contenido de la pila despues de agregar A:",pila)
                 simbIra=buscarSimbolo(simbolos,pila[len(pila)-1])
                 #s=Ir_a[j,A]
-                s=buscarAccion(variable,pila[len(pila)-2]+2,simbIra)
+                es=int(pila[len(pila)-2])+2
+                print(es)
+                s=buscarAccion(variable,es,simbIra)
                 #push s
+                print(s)
                 pila.append(s)
                 print("contenido de la pila despues de agregar s:",pila)
                 print("tira de tokens despues de la reduccion:",tira)  
@@ -270,8 +400,6 @@ def limpiar(ventana):
     encabezado(ventana)
     
 
-direccionArchivo2=""
-tiraTokens=""
-
-
-    
+direccionArchivo2=""    
+tiraTokens=gramatica_path
+#analizadorSintacticoJava()

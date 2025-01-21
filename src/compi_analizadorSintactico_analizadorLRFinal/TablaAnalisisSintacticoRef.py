@@ -27,7 +27,10 @@ def InterfazTablaAS():
     font1=("Times New Roman",14)
     VentanaPrincipal =Toplevel()
     VentanaPrincipal.title("Algoritmo de la colección canónica")
-    VentanaPrincipal.state("zoomed")
+    try:
+        VentanaPrincipal.state("zoomed")
+    except:
+        VentanaPrincipal.attributes('-zoomed', True) 
     VentanaPrincipal.config(background="#363062")
     font2=("Times New Roman",20)
     archivoLabel=Label(VentanaPrincipal,text="Seleccionar Archivo:",font=font1,width=20,background="#363062",foreground="white")
@@ -100,7 +103,7 @@ def ImprimirResultados2(Ventana,FrameResultados,direccionArchivo):
 
 
 
-def ImprimirTablaAS(Ventana,FrameResultados):
+def ImprimirTablaASZ(Ventana,FrameResultados):
     global direccionArchivo
     datos=mainPyS(direccionArchivo)#Obtiene los primeros y siguientes
     archivo=open(direccionArchivo,encoding="utf-8")

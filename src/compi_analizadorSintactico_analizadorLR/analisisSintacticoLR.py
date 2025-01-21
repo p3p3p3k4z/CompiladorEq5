@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
 from lexico import *
-from TablaAnalisisSintactico import *
+from TablaAnalisisSintacticoS import *
 from PrimerosYSiguientes import mainPyS
 #Aun no tiene la modificacion de la regla de lambda
 def analisisSintactico():
@@ -12,7 +12,7 @@ def analisisSintactico():
         VentanaPrincipal.state("zoomed")
     except:
         VentanaPrincipal.attributes('-zoomed', True) 
-    VentanaPrincipal.config(background="#363062")
+    VentanaPrincipal.config(background="#3D3D3D")
     encabezado(VentanaPrincipal)
 
 def encabezado(VentanaPrincipal):
@@ -20,14 +20,14 @@ def encabezado(VentanaPrincipal):
     font2=("Times New Roman",20)
     archivoLabel=Label(VentanaPrincipal,text="Seleccionar Archivo:",font=font1,width=20,background="#363062",foreground="white")
     archivoLabel.place(x=60,y=30)
-    archivoButton=Button(VentanaPrincipal,text="Abrir archivo",width=20,command=lambda:abrirArchivo(VentanaPrincipal),bg="#F99417",font=font1)
+    archivoButton=Button(VentanaPrincipal,text="Abrir Gramatica",width=20,command=lambda:abrirArchivo(VentanaPrincipal),bg="#578E7E",font=font1)
     archivoButton.place(x=300,y=20)
-    tokenButton=Button(VentanaPrincipal,text="Seleccionar tira de tokens",width=20,bg="#F99417",font=font1,command=lambda:abrirArchivo1(VentanaPrincipal))
+    tokenButton=Button(VentanaPrincipal,text="Abrir programa/token",width=20,bg="#578E7E",font=font1,command=lambda:abrirArchivo1(VentanaPrincipal))
     tokenButton.place(x=300,y=100)
-    ImprimirResultad0s=Button(VentanaPrincipal,text="Imprimir Resultados",width=20,bg="#F99417",font=font1,command=lambda:imprimirResultados(VentanaPrincipal))
-    ImprimirResultad0s.place(x=500,y=60)
-    limpiarButton=Button(VentanaPrincipal,text="Limpiar",width=20,bg="#F99417",font=font1,command=lambda:limpiar(VentanaPrincipal))
-    limpiarButton.place(x=700,y=60)
+    ImprimirResultad0s=Button(VentanaPrincipal,text="Analizar",width=20,bg="#578E7E",font=font1,command=lambda:imprimirResultados(VentanaPrincipal))
+    ImprimirResultad0s.place(x=600,y=30)
+    limpiarButton=Button(VentanaPrincipal,text="Limpiar",width=20,bg="#578E7E",font=font1,command=lambda:limpiar(VentanaPrincipal))
+    limpiarButton.place(x=600,y=100)
     
     VentanaPrincipal.mainloop()
 

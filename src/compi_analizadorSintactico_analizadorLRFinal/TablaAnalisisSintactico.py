@@ -103,7 +103,7 @@ def ImprimirResultados2(Ventana,FrameResultados,direccionArchivo):
 
 
 
-def ImprimirTablaAS(Ventana,FrameResultados):
+def ImprimirTablaASZ(Ventana,FrameResultados):
     global direccionArchivo
     datos=mainPyS(direccionArchivo)#Obtiene los primeros y siguientes
     archivo=open(direccionArchivo,encoding="utf-8")
@@ -317,4 +317,4 @@ def CargadoGramatica2(direccionArchivo):
 
 ruta=""
 direccionArchivo=""
-InterfazTablaAS()
+#InterfazTablaAS()

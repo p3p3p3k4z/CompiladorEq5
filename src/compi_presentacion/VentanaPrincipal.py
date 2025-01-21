@@ -29,7 +29,7 @@ from VentanaPrimerosSiguientesAri import ventanaPYS_Aux
 from VentanaCanonica import ventana_coleccion
 from VentanaTablaAnalizadorSintactico import ventanaTablaSintactico
 from analisisSintacticoLR import analisisSintactico
-from Analizador_Sintactico import analizadorSintacticoJava
+from Analizador_Sintacticov2 import analizadorSintacticoJava
 from analisis_semantico import analizadorSemantico
 
 # Configuración global de customtkinter
