@@ -9,15 +9,15 @@
 ---
 
 # IMPLEMENTACIONES FALTANTES
-###Algoritmo de thompson
+### Algoritmo de thompson
 - Desabilitar boton de inspeccionar y limpiar
 - Colores
-- Pasar a customertkinter (opcional)
+- INTERFAZ
 
 ### Construccion de Conjuntos
 - Desabilitar boton de inspeccionar y limpiar
 - Colores
-- Pasar a customertkinter (opcional)
+- INTERFAZ
 
 ### Canonica
 - lo de las " , "
@@ -25,7 +25,7 @@
 ### Tabla de Analisis Sintactico
 - Ya se me olvido que se tenia que hacer ;-;
 
-# En resumen miren la asignacion y que tengan lo mismo. que se pueda previsualizar los archivos ;-;. Cosas asi
+# En resumen miren la asignacion ;_;
 
 
 
