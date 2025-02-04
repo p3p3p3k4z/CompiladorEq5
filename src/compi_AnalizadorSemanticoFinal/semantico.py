@@ -10,6 +10,7 @@ from TablaAnalisisSintactico import *
 import re
 from pip._vendor.distlib.util import AND
 import textwrap
+import subprocess
 
 global codigotraducido
 
@@ -79,6 +80,10 @@ def nuevoArchivo():
     traduccion2 = traduccion2.replace(";", ";\n")
     traduccion.write(traduccion2)
     traduccion.close()
+    try:
+        subprocess.Popen([r"C:\Program Files\Notepad++\notepad++.exe", "traduccion.cpp"])
+    except:
+        pass
     
 def cargarGramatica(Ventana,direccionArchivo):
     global Gramatica
@@ -142,6 +147,10 @@ def abrirArchivo1(Ventana):
         tok.set_tipo(tok.get_tipo().replace("nextFloat", "nextfloat"))
         tok.set_tipo(tok.get_tipo().replace("nextBoolean", "nextboolean"))
     print("Tira de tokens recibida en el léxico:\n", tiraTokens)
+    try:
+        subprocess.Popen([r"C:\Program Files\Notepad++\notepad++.exe", direccionArchivo])
+    except:
+        pass
 
 def imprimirResultados(Ventana):
     global tiraTokens
