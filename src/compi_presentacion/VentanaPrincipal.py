@@ -10,6 +10,8 @@ lib_path2 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi
 sys.path.append(lib_path2)
 lib_path3 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_Analizador_Semantico'))
 sys.path.append(lib_path3)
+lib_path7 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_AnalizadorSemanticoFinal'))
+sys.path.append(lib_path7)
 lib_path5 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_analizadorSintactico_analizadorLR'))
 sys.path.append(lib_path5)
 lib_path6 = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'compi_analizadorSintactico_analizadorLRFinal'))
@@ -31,6 +33,7 @@ from VentanaTablaAnalizadorSintactico import ventanaTablaSintactico
 from analisisSintacticoLR import analisisSintactico
 from Analizador_Sintacticov2 import analizadorSintacticoJava
 from analisis_semantico import analizadorSemantico
+from semantico import analizadorSemanticoFinal
 
 # Configuración global de customtkinter
 set_appearance_mode("dark") 
@@ -99,7 +102,7 @@ def ventanaPrincipal():
         text="Análisis Semántico", 
        # state="disabled", 
         corner_radius=10,
-        command=lambda: analizadorSemantico(),
+        command=lambda: abrirMenuSemantico(),
         font=("Times New Roman", 14),
         height=50,
         width=250
@@ -231,3 +234,25 @@ def abrirMenuSintactico():
         font=("Times New Roman", 12)
     ).pack(pady=10)
     
+def abrirMenuSemantico():
+    menu_lexico = CTkToplevel(raiz)
+    menu_lexico.geometry("400x300")
+    menu_lexico.title("Opciones de Análisis Semantico")
+
+    CTkLabel(menu_lexico, text="Análisis Semantico", font=("Times New Roman", 16, "bold")).pack(pady=10)
+
+    CTkButton(
+        menu_lexico, 
+        text="A. Semantico con gramaticas de clase", 
+        command=lambda: analizadorSemantico(), 
+        corner_radius=10,
+        font=("Times New Roman", 12)
+    ).pack(pady=10)
+
+    CTkButton(
+        menu_lexico, 
+        text="Analizador Semantico Proyecto Final", 
+        command=lambda: analizadorSemanticoFinal(), 
+        corner_radius=10,
+        font=("Times New Roman", 12)
+    ).pack(pady=10)

@@ -1,0 +1,116 @@
+S F X E P T A V H R W L C D U G O Z Q B N Y I J K M
+id ; , class { } ( ) new nextint nextfloat nextdouble next nextboolean nextline print import java util scanner public private protected float int string char void double boolean nint nfloat [ ] = static varcadena literalcar true false system out . println printf + * / % if else igualigual mayorigual menorigual diferente and or masmas menosmenos masigual menosigual porigual entredosigual modigual resta > < for return while do break switch case default :
+S->N D F D->{S.trad:=N.trad||" "||D.trad||" "||F.trad||" "||D.trad}
+N->import java . util . scanner ;->{N.trad:="#include <iostream>"}
+N->λ->{N.trad:=""}
+D->class id { X X }->{D.trad:="class "||id.val||"{"||X.trad||" "||X.trad||"}"}
+D->λ->{D.trad:=""}
+F->λ->{F.trad:=""}
+F->E class id { X X }->{F.trad:=E.trad||" class "||id.val||"{"||X.trad||" "||X.trad||"}"}
+X->E U T id ( P ) { W }->{X.trad:=E.trad||" "||U.trad||" "||T.trad||" "||id.val||"("||P.trad||"){"||W.trad||"}"}
+X->T id ( P ) { W }->{X.trad:=T.trad||" "||id.val||"("||P.trad||"){"||W.trad||"}"}
+X->X X->{X.trad:=X.trad||" "||X.trad}
+X->λ->{X.trad:=""}
+U->static->{U.trad:="static"}
+U->λ->{U.trad:=""}
+E->public->{E.trad:="public"}
+E->private->{E.trad:="private"}
+E->protected->{E.trad:="protected"}
+E->λ->{E.trad:=""}
+P->λ->{P.trad:=""}
+P->T R id M->{P.trad:=T.trad||" "||id.val||R.trad||M.trad}
+M->, P->{M.trad:=", "||P.trad}
+M->λ->{M.trad:=""}
+R->[ nint ] R->{R.trad:="["||nint.val||"]"||R.trad}
+R->[ ]->{R.trad:="[]"}
+R->λ->{R.trad:=""}
+T->float->{T.trad:="float"}
+T->int->{T.trad:="int"}
+T->void->{T.trad:="void"}
+T->double->{T.trad:="double"}
+T->char->{T.trad:="char"}
+T->string->{T.trad:="string"}
+T->boolean->{T.trad:="bool"}
+A->T V->{A.trad:=T.trad||" "||V.trad}
+A->λ->{A.trad:=""}
+W->E U T V->{W.trad:=E.trad||" "||U.trad||" "||T.trad||" "||V.trad}
+V->id L ; W->{V.trad:=id.val||L.trad||"; "||W.trad}
+V->H id ; W->{V.trad:=id.val||H.trad||"; "||W.trad}
+V->H id = new T Y ; W->{V.trad:=id.val||H.trad||"=new "||T.trad||Y.trad||"; "||W.trad}
+V->H id = { I } ; W->{V.trad:=id.val||H.trad||"={"||I.trad||"}; "||W.trad}
+I->C->{I.trad:=C.trad}
+I->C , I->{I.trad:=C.trad||","||I.trad}
+H->[ ] H->{H.trad:="[]"||H.trad}
+H->λ->{H.trad:=""}
+Y->[ nint ] Y->{Y.trad:="["||nint.val||"]"||Y.trad}
+Y->λ->{Y.trad:=""}
+W->scanner id = new scanner ( system . id ) ; W->{W.trad:=W.trad}
+W->G ( Y varcadena R ) ; W->{W.trad:=G.trad||Y.trad||varcadena.val||R.trad||"; "||W.trad}
+Y->id + Y->{Y.trad:=id.val||"+"||Y.trad}
+Y->id , Y->{Y.trad:=id.val||","||Y.trad}
+R->+ id R->{R.trad:="+"||id.val||R.trad}
+R->+ C R->{R.trad:="+"||C.trad||R.trad}
+R->, C R->{R.trad:=","||C.trad||R.trad}
+R->, id R->{R.trad:=","||id.val||R.trad}
+W->id L ; W->{if "cin>>"~~L.trad W.trad:=L.trad||id.val||"; "||W.trad else W.trad:=id.val||L.trad||"; "||W.trad}
+W->if ( Q ) { W } W->{W.trad:="if ("||Q.trad||"){"||W.trad||"} "||W.trad}
+W->if ( Q ) { W } else { W } W->{W.trad:="if ("||Q.trad||"){"||W.trad||"} "||"else"||" {"||W.trad||"} "||W.trad}
+W->for ( T id = C ; Q ; id masmas ) { W } W->{W.trad:="for ("||T.trad||" "||id.val||"="||C.trad||";"||Q.trad||";"||id.val||"++"||"){"||W.trad||"} "||W.trad}
+W->for ( T id = C ; Q ; id menosmenos ) { W } W->{W.trad:="for ("||T.trad||" "||id.val||"="||C.trad||";"||Q.trad||";"||id.val||"--"||"){"||W.trad||"} "||W.trad}
+W->while ( Q ) { W } W->{W.trad:="while ("||Q.trad||"){"||W.trad||"} "||W.trad}
+W->do { W } while ( Q ) ; W->{W.trad:="do {"||W.trad||"} while ("||Q.trad||"); "||W.trad}
+W->switch ( id ) { B } W->{W.trad:="switch ("||id.val||"){"||B.trad||"} "||W.trad}
+B->case C : W B->{B.trad:="case "||C.trad||": "||W.trad||B.trad}
+B->default : W->{B.trad:="default: "||W.trad}
+B->λ->{B.trad:=""}
+W->break ; W->{W.trad:="break; "||W.trad}
+W->λ->{W.trad:=""}
+W->return C ; W->{W.trad:="return "||C.trad||"; "||W.trad}
+W->return id ; W->{W.trad:="return "||id.val||"; "||W.trad}
+W->return Q ; W->{W.trad:="return "||Q.trad||"; "||W.trad}
+W->return L ; W->{W.trad:="return "||L.trad||"; "||W.trad}
+W->id masmas ; W->{W.trad:=id.val||"++"||"; "||W.trad}
+W->id menosmenos ; W->{W.trad:=id.val||"--"||"; "||W.trad}
+Q->id Q->{Q.trad:=id.val||" "||Q.trad}
+Q->Z id Q->{Q.trad:=Z.trad||" "||id.val||" "||Q.trad}
+Q->Z C Q->{Q.trad:=Z.trad||" "||C.trad||" "||Q.trad}
+Q->C Q->{Q.trad:=C.trad||" "||Q.trad}
+Q->λ->{Q.trad:=""}
+Z->igualigual->{Z.trad:="=="}
+Z->diferente->{Z.trad:="!="}
+Z->or->{Z.trad:="||"}
+Z->and->{Z.trad:="&&"}
+Z->mayorigual->{Z.trad:=">="}
+Z->menorigual->{Z.trad:="<="}
+Z->>->{Z.trad:=">"}
+Z-><->{Z.trad:="<"}
+K->nextint->{K.trad:=""}
+K->nextfloat->{K.trad:=""}
+K->nextdouble->{K.trad:=""}
+K->nextboolean->{K.trad:=""}
+K->nextline->{K.trad:=""}
+L->= id . K ( )->{L.trad:="cin>>"}
+L->, id L->{L.trad:=","||id.val||L.trad}
+L->= C L->{L.trad:="="||C.trad||L.trad}
+L->C L->{L.trad:=C.trad||L.trad}
+L->id L->{L.trad:=id.val||L.trad}
+L->masigual L->{L.trad:="+="||L.trad}
+L->menosigual L->{L.trad:="-="||L.trad}
+L->= id L->{L.trad:="="||id.val||L.trad}
+L->O id L->{L.trad:=O.trad||id.val||L.trad}
+L->O C L->{L.trad:=O.trad||C.trad||L.trad}
+L->= C L->{L.trad:="="||C.trad||L.trad}
+O->+->{O.trad:="+"}
+O->*->{O.trad:="*"}
+O->/->{O.trad:="/"}
+O->%->{O.trad:="%"}
+L->λ->{L.trad:=""}
+C->nint->{C.trad:=nint.val}
+C->varcadena->{C.trad:=varcadena.val}
+C->literalcar->{C.trad:=literalcar.val}
+C->nfloat->{C.trad:=nfloat.val}
+C->true->{C.trad:"true"}
+C->false->{C.trad:="false"}
+G->system . out . println->{G.trad:="cout<<"}
+G->system . out . print->{G.trad:="cout<<"}
+G->system . out . printf->{G.trad:="cout<<"}

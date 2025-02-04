@@ -3,16 +3,10 @@ from tkinter import filedialog
 from tkinter import ttk
 from lexico import *
 from Analizador_Lexico import *
-from Analizador_Semantico_Final import *
-from PrimerosYSiguientes import mainPyS
-import Analizador_Lexico as AL
 from TablaAnalisisSintactico import *
+from PrimerosYSiguientes import mainPyS
 import re
-from pip._vendor.distlib.util import AND
-import textwrap
 
-# Clase para guardar resultados de acciones semánticas
-# Ejemplo: T.trad:="Prueba" se guarda en una clase con base T, atributo trad, y valor Prueba
 class result_acc:
     def __init__(self, base, atrib, val):
         self.base = base
@@ -40,50 +34,35 @@ class result_acc:
     def __str__(self):
         return str(self.base) + "." + str(self.atrib) + ":=" + str(self.val)
 
-def analizadorSemanticoFinal():
+def analizadorSemantico():
     VentanaPrincipal =Toplevel()
     VentanaPrincipal.title("Analizador semántico")
-    VentanaPrincipal.state("zoomed")
-    VentanaPrincipal.config(background="#F6C794")
+    try:
+        VentanaPrincipal.state("zoomed")
+    except:
+        VentanaPrincipal.attributes('-zoomed', True) 
+    VentanaPrincipal.config(background="#3D3D3D")
     encabezado(VentanaPrincipal)
     VentanaPrincipal.mainloop()
 
 def encabezado(VentanaPrincipal):
     font1=("Times New Roman",14)
     font2=("Times New Roman",20)
-    archivoLabel=Label(VentanaPrincipal,text="Seleccionar Archivo:",font=font1,width=20,background="#FF9D23",foreground="white")
+    archivoLabel=Label(VentanaPrincipal,text="Seleccionar Archivo:",font=font1,width=20,background="#BEC6A0",foreground="white")
     archivoLabel.place(x=60,y=30)
-    archivoButton=Button(VentanaPrincipal,text="Cargar Gramatica",width=20,command=lambda:abrirArchivo(VentanaPrincipal),bg="#FB9EC6",font=font1)
+    archivoButton=Button(VentanaPrincipal,text="Abrir Gramatica",width=20,command=lambda:abrirArchivo(VentanaPrincipal),bg="#708871",font=font1)
     archivoButton.place(x=300,y=20)
-    tokenButton=Button(VentanaPrincipal,text="Abrir Archivo",width=20,bg="#FB9EC6",font=font1,command=lambda:abrirArchivo1(VentanaPrincipal))
+    tokenButton=Button(VentanaPrincipal,text="Abrir Codigo",width=20,bg="#708871",font=font1,command=lambda:abrirArchivo1(VentanaPrincipal))
     tokenButton.place(x=300,y=100)
-    ImprimirResultad0s=Button(VentanaPrincipal,text="Imprimir Resultados",width=20,bg="#FB9EC6",font=font1,command=lambda:imprimirResultados(VentanaPrincipal))
-    ImprimirResultad0s.place(x=700,y=20)
-    limpiarButton=Button(VentanaPrincipal,text="Limpiar",width=20,bg="#FB9EC6",font=font1,command=lambda:limpiar(VentanaPrincipal))
-    limpiarButton.place(x=900,y=20)
-    nuevoArchivoButton=Button(VentanaPrincipal,text="Generar Código",width=20,bg="#FB9EC6",font=font1,command=lambda:nuevoArchivo())
-    nuevoArchivoButton.place(x=700,y=100)
-    
-import re
+    ImprimirResultad0s=Button(VentanaPrincipal,text="Analizar",width=20,bg="#708871",font=font1,command=lambda:imprimirResultados(VentanaPrincipal))
+    ImprimirResultad0s.place(x=800,y=20)
+    limpiarButton=Button(VentanaPrincipal,text="Limpiar",width=20,bg="#708871",font=font1,command=lambda:limpiar(VentanaPrincipal))
+    limpiarButton.place(x=800,y=100)
 
-def nuevoArchivo(codigotraducido):
-    # Abrimos el archivo para escribir el código formateado
-    traduccion = open("traduccion.py", "w")
-    traduccion2 = codigotraducido.replace("import", "\nimport")
-    traduccion2 = re.sub(r"def ", "\ndef ", traduccion2)
-    traduccion2 = re.sub(r"class ", "\nclass ", traduccion2)
-    traduccion2 = re.sub(r"([a-zA-Z_][a-zA-Z0-9_]*\s*=\s*.*)(?=\n)", r"\1\n", traduccion2)
-    traduccion2 = re.sub(r"(if|elif|else)\s", r"\n\1 ", traduccion2)
-    traduccion2 = re.sub(r"\n([a-zA-Z_][a-zA-Z0-9_]*\s*=\s*.*)(?=\n)", r"\1\n", traduccion2)
-    traduccion.write(traduccion2)
-    traduccion.close()
-
-    
-    
 def cargarGramatica(Ventana,direccionArchivo):
     global Gramatica
     frameGramatica=Frame(Ventana,width=300,height=600)
-    frameGramatica.place(x=60,y=100)
+    frameGramatica.place(x=10,y=150)
     archivo=open(direccionArchivo,"r",encoding="utf-8")
     Gramatica=[]
     linea=archivo.readline()
@@ -94,7 +73,7 @@ def cargarGramatica(Ventana,direccionArchivo):
         grama=linea
         grama=grama.replace("\n","")
         Gramatica.append(grama) #aqui se guarda la gramatica sin el salto de linea
-        mostrarRegla=Label(frameGramatica,text=str(linea),font=("Times New Roman",14),width=20)
+        mostrarRegla=Label(frameGramatica,text=str(linea),font=("Times New Roman",14),width=30)
         mostrarRegla.grid(row=contador,column=0)
         contador+=1
 
@@ -102,23 +81,21 @@ def abrirArchivo(Ventana):
     global direccionArchivo2
     Ventana.grab_set()
     username=getpass.getuser()
-    ruta_proyecto = r"C:\Users\{username}\Documents\ProyectoCompiladores"
-    direccionArchivo2= "Pruebas_Archivos_Entrada_JAVA/pendiente"    #  Antes solo aceptaba una gramática, esto se tuvo que cambiar
-    #direccionArchivo2 = filedialog.askopenfilename(initialdir=ruta_proyecto, title="Cargar Gramática", filetypes=(("txt", "*.txt"),))
+    ruta_proyecto = r"../../Pruebas_Analizador_Semantico"
+    direccionArchivo2 = filedialog.askopenfilename(initialdir=ruta_proyecto, title="Cargar Gramática", filetypes=(("txt", "*.txt"),))
     cargarGramatica(Ventana,direccionArchivo2)
 
 def abrirArchivo1(Ventana):
     global tiraTokens
     Ventana.grab_set()
     username=getpass.getuser()
-    ruta_proyecto = r"C:\Users\{username}\Documents\ProyectoCompiladores"
-    direccionArchivo=filedialog.askopenfilename(initialdir=ruta_proyecto,title="Abrir Archivo",filetypes=(("java","*.java"),))
+    ruta_proyecto = r"../../Pruebas_Analizador_Semantico"
+    direccionArchivo=filedialog.askopenfilename(initialdir=ruta_proyecto,title="Abrir Archivo",filetypes=(("txt", "*.txt"),("java", "*.java"),))
     tiraTokens = ObtenerTiraTokensExternaObj(direccionArchivo)
 
-    #SUSTITUIMOS LOS == y simbolos compuestos por dos caracteres para que sean detectados
     for tok in tiraTokens:
-        #tok.set_tipo(tok.get_tipo().replace("<","menorque"))
-        #tok.set_tipo(tok.get_tipo().replace(">","mayorque"))
+        tok.set_tipo(tok.get_tipo().replace("<","menorque"))
+        tok.set_tipo(tok.get_tipo().replace(">","mayorque"))
         tok.set_tipo(tok.get_tipo().replace("==","igualigual"))
         tok.set_tipo(tok.get_tipo().replace(">=","mayorigual"))
         tok.set_tipo(tok.get_tipo().replace("<=","menorigual"))
@@ -142,6 +119,32 @@ def abrirArchivo1(Ventana):
         tok.set_tipo(tok.get_tipo().replace("nextFloat", "nextfloat"))
         tok.set_tipo(tok.get_tipo().replace("nextBoolean", "nextboolean"))
     print("Tira de tokens recibida en el léxico:\n", tiraTokens)
+    MostrarArchivo(Ventana,direccionArchivo)
+
+
+def MostrarArchivo(ventana, direccion_archivo):
+    """
+    Muestra el contenido completo del archivo en un Frame dentro de la ventana.
+
+    Args:
+        ventana (tk.Tk): La ventana principal donde se mostrará el contenido.
+        direccion_archivo (str): La ruta del archivo que contiene el texto.
+    """
+    try:
+        # Crear un Frame para mostrar el contenido del archivo
+        frame_contenido = Frame(ventana, width=300, height=600)
+        frame_contenido.place(x=20, y=600)
+        
+        with open(direccion_archivo, "r", encoding="utf-8") as archivo:
+            # Leer todas las líneas del archivo
+            for contador, linea in enumerate(archivo):
+                # Mostrar cada línea en el Frame
+                mostrar_linea = Label(frame_contenido, text=linea.strip(), font=("Times New Roman", 14), anchor="w", width=20)
+                mostrar_linea.grid(row=contador, column=0, sticky="w")
+    
+    except Exception as e:
+        print(f"Error al cargar el archivo: {e}")
+
 
 def imprimirResultados(Ventana):
     global tiraTokens
@@ -149,24 +152,25 @@ def imprimirResultados(Ventana):
     global Gramatica
     ventanaResultados=Toplevel()
     ventanaResultados.title("Resultados")
-    ventanaResultados.state("zoomed")
+    try:
+        ventanaResultados.state("zoomed")
+    except:
+        ventanaResultados.attributes('-zoomed', True) 
     ventanaResultados.grab_set()
-    frameResultados=Frame(ventanaResultados,width=300,height=600)
-    frameResultados.place(x=60,y=100)
+    frameResultados=Frame(ventanaResultados,width=200,height=500)
+    frameResultados.place(x=200,y=100)
     ventana2=Toplevel()
-    frame2=Frame(ventana2,width=300,height=600)
+    frame2=Frame(ventana2,width=200,height=500)
     
-    #Esto es lo que hay que arreglar
     datos,reglas=ImprimirResultados2(ventana2,frame2,direccionArchivo2)
     ventana2.destroy()
     setDireccionArchivo(direccionArchivo2,reglas)
-    variable,simbolos,estados=ImprimirTablaAS(frameResultados)#variable es un diccionario con clave el numero de estado y la columna y contenido un label con el contenido de la tabla
+    variable,simbolos,estados=ImprimirTablaAS(frameResultados)
     for var in variable:
         contenido=variable[var]
         cont=contenido.cget("text")
         print("clave:",var,"contenido:",cont)
-    #print("simbolos:",simbolos)
-    #print("estados:",estados)
+
         
     print("tiraTokens:",tiraTokens)
     tuplasimbolos=()
@@ -178,16 +182,15 @@ def imprimirResultados(Ventana):
         arreglosimbolos.append(tuplasimbolos)
     tuplaGrama=()
     arreGramatica=[]
-    Gramatica=list(filter(lambda x: x is not None and x != "", Gramatica)) #aqui se quitan los elementos vacios de la lista
+    Gramatica=list(filter(lambda x: x is not None and x != "", Gramatica))
 
-    # Este arreglo guardará las acciones semánticas guardadas entre llaves { }
     arreAcciones = []
     for grama in Gramatica:
         print(grama)
         grama=grama.split("->")
         tuplaGrama=(grama[0],grama[1])
         arreGramatica.append(tuplaGrama)
-        arreAcciones.append(grama[2])       # Esta línea busca la sección después de la segunda flecha ->, por lo que NO ACEPTA GRAMATICAS SIN DOS FLECHAS ->
+        arreAcciones.append(grama[2])      
     print("Gramatica:",arreGramatica)
     print("simbolos:",arreglosimbolos)
     print("Acciones:",arreAcciones)
@@ -197,25 +200,23 @@ def imprimirResultados(Ventana):
 
 def TablaLr(variable,simbolos,tira,arreGramatica,Ventana,arreAcciones):
     Ventana.grab_set()
-    tabla=Frame(Ventana,width=1200,height=600)
-    tabla.place(x=300,y=150)
+    tabla=Frame(Ventana,width=920,height=500)
+    tabla.place(x=350,y=150)
     tabla.config(background="#F6C794")
-    canvas=Canvas(Ventana,width=1200,height=600)
-    canvas.place(x=300,y=150)
+    canvas=Canvas(Ventana,width=920,height=500)
+    canvas.place(x=350,y=150)
 
     def on_arrow_key(event):
             if event.keysym == "Left":
                 canvas.xview_scroll(-1, "units")
             elif event.keysym == "Right":
-                canvas.xview_scroll(1, "units")
-            #canvas.config(scrollregion=canvas.bbox("all"))    
+                canvas.xview_scroll(1, "units") 
 
     def on_arrow_key_v(event):
          if event.keysym == "Up":
              canvas.yview_scroll(-1, "units")
          elif event.keysym == "Down":
              canvas.yview_scroll(1, "units")
-         #canvas.config(scrollregion=canvas.bbox("all"))
     
     scrollbar=ttk.Scrollbar(canvas, orient="vertical", command=canvas.yview)
     scrollbar.set(0.0, 1.0)
@@ -237,11 +238,11 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana,arreAcciones):
     accion=[]
     pila.append(0)
     font1=("Times New Roman",14)
-    labelTextPila=Label(tabla,text="Pila",width=20,background="#FF9D23",font=font1,borderwidth=2,relief="solid")
+    labelTextPila=Label(tabla,text="Pila",background="#BEC6A0",width=20,font=font1,borderwidth=2,relief="solid")
     labelTextPila.grid(row=contadorFila,column=0)
-    labelTextTira=Label(tabla,text="Entrada",width=30,background="#FF9D23",font=font1,borderwidth=2,relief="solid")
+    labelTextTira=Label(tabla,text="Entrada",width=30,background="#BEC6A0",font=font1,borderwidth=2,relief="solid")
     labelTextTira.grid(row=contadorFila,column=1)
-    labelTextSalida=Label(tabla,text="Salida",width=100,background="#FF9D23",font=font1,borderwidth=2,relief="solid")    # Se le da más espacio a la salida por las tres columnas que debe almacenar
+    labelTextSalida=Label(tabla,text="Salida",width=100,background="#BEC6A0",font=font1,borderwidth=2,relief="solid") 
     labelTextSalida.grid(row=contadorFila,column=2,columnspan=3)
     contadorFila+=1
     results_acc = []
@@ -249,9 +250,9 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana,arreAcciones):
     while((len(tira)>0) & (accion!='Aceptacion') & (accion!='')):
         a=tira[0]
         sacarTira=tira[0]
-        labelPila=Label(tabla,text=pilaCadena(pila),background="#98D8EF",width=20,font=font1,borderwidth=2,relief="solid")
+        labelPila=Label(tabla,text=pilaCadena(pila),background="#FEF3E2",width=20,font=font1,borderwidth=2,relief="solid")
         labelPila.grid(row=contadorFila,column=0) 
-        labelTira=Label(tabla,text=pilaCadena(tira),background="#98D8EF",width=30,font=font1,borderwidth=2,relief="solid")
+        labelTira=Label(tabla,text=pilaCadena(tira),width=30,background="#FEF3E2",font=font1,borderwidth=2,relief="solid")
         labelTira.grid(row=contadorFila,column=1)
         simboloTira=buscarSimbolo(simbolos,sacarTira)
         print("simbolo en la tira:",simboloTira)
@@ -265,11 +266,11 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana,arreAcciones):
             if(accion[0]=='d'):
                 tira.pop(0)
                 print("salida:",accion) #imprimimos la accion de desplazamiento o reduccion
-                labelSalida=Label(tabla,text=pilaCadena(accion),background="#98D8EF",width=20,font=font1,borderwidth=2,relief="solid")
+                labelSalida=Label(tabla,text=pilaCadena(accion),background="#FEF3E2",width=20,font=font1,borderwidth=2,relief="solid")
                 labelSalida.grid(row=contadorFila,column=2)
-                labelRegla=Label(tabla,text=" ",width=40,font=font1,background="#98D8EF",borderwidth=2,relief="solid")
+                labelRegla=Label(tabla,text=" ",width=40,font=font1,background="#FEF3E2",borderwidth=2,relief="solid")
                 labelRegla.grid(row=contadorFila,column=3)
-                labelAccion=Label(tabla,text=" ",width=40,font=font1,background="#98D8EF",borderwidth=2,relief="solid")
+                labelAccion=Label(tabla,text=" ",width=40,font=font1,background="#FEF3E2",borderwidth=2,relief="solid")
                 labelAccion.grid(row=contadorFila,column=4)
                 pila.append(a)
                 estadoAgregar=int(accion[1:])
@@ -279,11 +280,11 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana,arreAcciones):
             elif(accion[0]=='0'or accion[0]=='1' or accion[0]=='2' or accion[0]=='3' or accion[0]=='4' or accion[0]=='5' or accion[0]=='6' or accion[0]=='7' or accion[0]=='8' or accion[0]=='9'):
                 tira.pop(0)
                 print("salida:",accion) #imprimimos la accion de desplazamiento o reduccion
-                labelSalida=Label(tabla,text=pilaCadena(accion),background="#98D8EF",width=20,font=font1,borderwidth=2,relief="solid")
+                labelSalida=Label(tabla,text=pilaCadena(accion),width=20,background="#FEF3E2",font=font1,borderwidth=2,relief="solid")
                 labelSalida.grid(row=contadorFila,column=2)
-                labelRegla=Label(tabla,text=" ",width=40,background="#98D8EF",font=font1,borderwidth=2,relief="solid")
+                labelRegla=Label(tabla,text=" ",width=40,font=font1,background="#FEF3E2",borderwidth=2,relief="solid")
                 labelRegla.grid(row=contadorFila,column=3)
-                labelAccion=Label(tabla,text=" ",width=40,background="#98D8EF",font=font1,borderwidth=2,relief="solid")
+                labelAccion=Label(tabla,text=" ",width=40,font=font1,background="#FEF3E2",borderwidth=2,relief="solid")
                 labelAccion.grid(row=contadorFila,column=4)
                 pila.append(a)
                 estadoAgregar=int(accion)
@@ -376,13 +377,13 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana,arreAcciones):
                 for i in range(len(results_acc)-1, -1, -1):
                     print(str(results_acc[i]))
 
-                labelSalida=Label(tabla,text=pilaCadena(accion),width=20,background="#98D8EF",font=font1,borderwidth=2,relief="solid")
+                labelSalida=Label(tabla,text=pilaCadena(accion),width=20,background="#FEF3E2",font=font1,borderwidth=2,relief="solid")
                 labelSalida.grid(row=contadorFila,column=2)
                 #imprimir la producción A→β
                 print("Regla:",regla)
-                labelRegla=Label(tabla,text=str(regla[0])+"->"+str(regla[1]),background="#98D8EF",width=40,font=font1,borderwidth=2,relief="solid")
+                labelRegla=Label(tabla,text=str(regla[0])+"->"+str(regla[1]),width=40,background="#FEF3E2",font=font1,borderwidth=2,relief="solid")
                 labelRegla.grid(row=contadorFila,column=3)
-                labelAccion=Label(tabla,text=acc_seman,width=40,font=font1,background="#98D8EF",borderwidth=2,relief="solid")
+                labelAccion=Label(tabla,text=acc_seman,width=40,font=font1,background="#FEF3E2",borderwidth=2,relief="solid")
                 labelAccion.grid(row=contadorFila,column=4)
                 tama=len(regla[1].split(' ')) #calculamos el tamaño de β
                 reglasinL=regla[1].split(' ')
@@ -411,13 +412,11 @@ def TablaLr(variable,simbolos,tira,arreGramatica,Ventana,arreAcciones):
             
             elif(accion=='Aceptacion'):
                 print("Aceptado")
-                labelRegla=Label(tabla,text="Aceptacion",width=20,background="#98D8EF",font=font1,borderwidth=2,relief="solid")
+                labelRegla=Label(tabla,text="Aceptacion",width=20,background="#FEF3E2",font=font1,borderwidth=2,relief="solid")
                 labelRegla.grid(row=contadorFila,column=2)
-                label2=Label(tabla,text=" ",width=40,font=font1,background="#98D8EF",borderwidth=2,relief="solid")
+                label2=Label(tabla,text=" ",width=40,background="#FEF3E2",font=font1,borderwidth=2,relief="solid")
                 label2.grid(row=contadorFila,column=3)
-                global codigotraducido 
-                codigotraducido = str(results_acc[len(results_acc)-1].get_val())
-                labelAccion=Label(tabla,text="Resultado: "+str(results_acc[len(results_acc)-1]),width=40,background="#98D8EF",font=font1,borderwidth=2,relief="solid")
+                labelAccion=Label(tabla,text="Resultado: "+str(results_acc[len(results_acc)-1]),background="#FEF3E2",width=40,font=font1,borderwidth=2,relief="solid")
                 labelAccion.grid(row=contadorFila,column=4)
             elif(accion==''):
                 print("Error de sintaxis")
@@ -452,7 +451,7 @@ def obtenerValor(accion, results_acc, pila, esCond):
         val1 = obtenerValor(prueba_simb[0], results_acc, pila, esCond)
         return str(val1) + str(val2)    # Devuelve el resultado de la concatenación
 
-    '''prueba_simb = re.split(r"\*", accion, 1)
+    prueba_simb = re.split(r"\*", accion, 1)
     if (len(prueba_simb) > 1):
         # Hay una multiplicación en la acción
         print("Entró a multiplicación")
@@ -486,7 +485,7 @@ def obtenerValor(accion, results_acc, pila, esCond):
         # Se usa recursividad para calcular el valor de los segmentos
         val2 = obtenerValor(prueba_simb[1], results_acc, pila, esCond)
         val1 = obtenerValor(prueba_simb[0], results_acc, pila, esCond)
-        return int(val1) - int(val2)    # Devuelve el resultado de la resta'''
+        return int(val1) - int(val2)    # Devuelve el resultado de la resta
 
     # Si, no hay operación, se debe almacenar un valor (Caso base)
     print("No hay operador")
@@ -509,20 +508,6 @@ def obtenerValor(accion, results_acc, pila, esCond):
         for i in range(len(pila)-1, -1, -1):    # Recorrer la pila de la tabla...
             print(pila[i])
             if (isinstance(pila[i], token_tipo_val) and pila[i].get_tipo() == "id"):    # Si el tipo es el buscado...
-                print("Se encontró id")
-                return pila[i].get_val()         # Devuelve el valor de la variable id
-            
-    elif (prueba_simb[0] == "varcadena"):          # Si lo que se busca es un varcadena...
-        for i in range(len(pila)-1, -1, -1):    # Recorrer la pila de la tabla...
-            print(pila[i])
-            if (isinstance(pila[i], token_tipo_val) and pila[i].get_tipo() == "varcadena"):    # Si el tipo es el buscado...
-                print("Se encontró id")
-                return pila[i].get_val()         # Devuelve el valor de la variable id
-            
-    elif (prueba_simb[0] == "literalcar"):          # Si lo que se busca es un literalcar...
-        for i in range(len(pila)-1, -1, -1):    # Recorrer la pila de la tabla...
-            print(pila[i])
-            if (isinstance(pila[i], token_tipo_val) and pila[i].get_tipo() == "literalcar"):    # Si el tipo es el buscado...
                 print("Se encontró id")
                 return pila[i].get_val()         # Devuelve el valor de la variable id
 
@@ -742,6 +727,6 @@ def limpiar(ventana):
     encabezado(ventana)
     
 
-direccionArchivo2=""
-tiraTokens=""
-analizadorSemanticoFinal()
+direccionArchivo2="../../Pruebas_Analizador_Semantico"
+tiraTokens="../../Pruebas_Analizador_Semantico"
+#analizadorSemantico()
