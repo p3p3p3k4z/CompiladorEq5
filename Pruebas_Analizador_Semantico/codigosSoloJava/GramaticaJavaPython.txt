@@ -1,0 +1,82 @@
+S F X E P T A V H R W L C D U G O Z Q B N Y I J K M
+id ; , class { } ( ) new nextint nextfloat nextdouble next nextboolean nextline print import java util scanner public private protected float int string char void double boolean nint nfloat [ ] = static varcadena literalcar true false system out . println printf + * / % if else igualigual mayorigual menorigual diferente and or masmas menosmenos masigual menosigual porigual entredosigual modigual resta > < for return while do break switch case default :
+S -> D F D -> {S.trad := D.trad || "\n" || F.trad || "\n" || D.trad}
+F -> λ -> {F.trad := ""}
+D -> class id { X X } -> {D.trad := "class " || id.val || ":\n" || X.trad || X.trad}
+D -> λ -> {D.trad := ""}
+X -> E U T id ( P ) { W } -> {X.trad := E.trad || U.trad || "def " || id.val || "(" || P.trad || "):\n" || W.trad}
+X -> T id ( P ) { W } -> {X.trad := "def " || id.val || "(" || P.trad || "):\n" || W.trad}
+X -> λ -> {X.trad := ""}
+U -> static -> {U.trad := ""}
+U -> λ -> {U.trad := ""}
+E -> public -> {E.trad := ""}
+E -> private -> {E.trad := "_"}
+E -> protected -> {E.trad := ""}
+E -> λ -> {E.trad := ""}
+P -> λ -> {P.trad := ""}
+P -> T R id -> {P.trad := id.val || ": " || T.trad || R.trad}
+R -> [ nint ] R -> {R.trad := "List" || R.trad}
+R -> [ ] -> {R.trad := "List"}
+R -> λ -> {R.trad := ""}
+T -> float -> {T.trad := "float"}
+T -> int -> {T.trad := "int"}
+T -> void -> {T.trad := ""}
+T -> double -> {T.trad := "float"}
+T -> char -> {T.trad := "str"}
+T -> string -> {T.trad := "str"}
+T -> boolean -> {T.trad := "bool"}
+A -> T V -> {A.trad := T.trad || " " || V.trad}
+A -> λ -> {A.trad := ""}
+V -> id H -> {V.trad := id.val || H.trad}
+H -> [ nint ] H -> {H.trad := "[]" || H.trad}
+H -> λ -> {H.trad := ""}
+W -> E U T id L ; W -> {W.trad := E.trad || U.trad || id.val || " = " || L.trad || "\n" || W.trad}
+W -> G ( varcadena ) ; W -> {W.trad := "print(" || varcadena.val || ")\n" || W.trad}
+W -> id L ; W -> {W.trad := id.val || L.trad || "\n" || W.trad}
+W -> if ( Q ) { W } W -> {W.trad := "if " || Q.trad || ":\n" || W.trad}
+W -> if ( Q ) { W } else { W } W -> {W.trad := "if " || Q.trad || ":\n" || W.trad || "\nelse:\n" || W.trad}
+W -> for ( T id = C ; Q ; id masmas ) { W } W -> {W.trad := "for " || id.val || " in range(" || C.trad || ", " || Q.trad || "):\n" || W.trad}
+W->while ( Q ) { W } W      	{W.trad:= "while (" || Q.trad || ") {" || W.trad || "}" || W.trad} 
+W->do { W } while ( Q ) ; W     {W.trad:="do {" || W.trad || "} while (" || Q.trad || ") ;" || 					W.trad}    
+W->switch ( id ) { B } W	{W.trad:= "switch (" || id.val || ") {" || B.trad || "}" ||W.trad}
+B->case C : W B 		{B.trad:= "case" || C.trad || ":" || W.trad || B.trad}
+B->default : W 			{B.trad:= "default :"  || W.trad}
+W->break ; W 			{W.trad:= "break ;" || W.trad}
+W->λ 				{W.trad:= ""}
+W->return C ; W 		{W.trad:= "return" || C.trad || ";" || W.trad}
+W->return id ; W		{W.trad:= "return" || id.val || ";" || W.trad}
+W->id masmas ; W		{W.trad:= id.val ||"masmas ;" || W.trad}
+W->id menosmenos ; W		{W.trad:= id.val || "menosmenos ;" || W.trad}
+Q->id Z id			{Q.trad:= id.val || Z.trad || id.val}
+Q->id Z C			{Q.trad:= id.val || Z.trad || C.trad}
+Q->C Z id			{Q.trad:= C.trad || Z.trad || id.val}
+Q->C Z C			{Q.trad:= C.trad || Z.trad || C.trad}
+Q->λ				{Q.trad:= ""}
+Z->igualigual			{Z.trad:= "igualigual"}
+Z->diferente			{Z.trad:= ""diferente"}
+Z->or				{Z.trad:= "or"}
+Z->and				{Z.trad:= "and"}
+Z->mayorigual			{Z.trad:= "mayorigual"}
+Z->menorigual			{Z.trad:= "menorigual"}
+Z->mayorque			{Z.trad:= "mayorque"}
+Z->menorque			{Z.trad:= "menorque"}
+L->, id L			{L.trad:= "," || id.val || L.trad}
+L->= C L			{L.trad:= C.trad || L.trad}
+L->masigual C L			{L.trad:= "masigual" || C.trad || L.trad}
+L->menosigual C L		{L.trad:= "menosigual" || C.trad || L.trad}
+L->= id O id L			{L.trad:= id.val || O.trad || id.val || L.trad}
+L->= id O C L			{L.trad:= id.val || O.trad || C.trad || L.trad}
+L->= C O C L			{L.trad:= C.trad || O.trad || C.trad || L.trad}
+O->+				{O.trad:="+"}
+O->*				{O.trad:="*"}
+O->/				{O.trad:="/"}
+O->%				{O.trad:="%"}
+L->λ				{L.trad:=""}
+C->nint				{C.trad:="nint"}
+C->varcadena			{C.trad:="varcadena"}
+C->literalcar			{C.trad:="literalcar"}
+C->nfloat			{C.trad:="nfloat"}
+C->true				{C.trad:="true"}
+C->false			{C.trad:="false"}
+G->system . out . println	{G.trad:="System.out.println"}
+G->printf			{G.trad:="printf"}

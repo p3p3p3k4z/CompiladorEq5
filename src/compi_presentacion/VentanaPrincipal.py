@@ -21,8 +21,8 @@ listado_image_path = os.path.join(base_path, '..', '..', 'imagenes', 'portada_ga
 icon_path = os.path.join(base_path, '..', '..', 'imagenes', 'icon_music.png')
 AUDIO_PATH = os.path.join(base_path, '..', '..', 'musica', 'main_theme.ogg')
 
-from VentanaThompson import Conjuntos
-from VentanaConjuntos import Conjuntos_afn
+from VentanaThompson_Custom import xd_conjunto
+from VentanaConjuntos_Custom import mini
 from VentanaAlexicov2Custom import VentanaAlexicoCustom
 
 from VentanaPrimerosSiguientesAri import ventanaPYS_Aux 
@@ -163,7 +163,7 @@ def abrirMenuLexico():
     CTkButton(
         menu_lexico, 
         text="Algoritmo de Thomson (AFND)", 
-        command=lambda: Conjuntos(), 
+        command=lambda: xd_conjunto(), 
         corner_radius=10,
         font=("Times New Roman", 12)
     ).pack(pady=10)
@@ -171,7 +171,7 @@ def abrirMenuLexico():
     CTkButton(
         menu_lexico, 
         text="Construcción de conjuntos (AFD)", 
-        command=lambda: Conjuntos_afn(), 
+        command=lambda: mini(), 
         corner_radius=10,
         font=("Times New Roman", 12)
     ).pack(pady=10)
